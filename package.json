@@ -1,0 +1,86 @@
+{
+	"name": "telegraf-stateless-question",
+	"version": "0.0.0",
+	"description": "Create stateless questions to Telegram users working in privacy mode",
+	"keywords": [
+		"telegraf",
+		"stateless",
+		"question",
+		"reply",
+		"privacy",
+		"mode",
+		"message"
+	],
+	"license": "MIT",
+	"repository": "EdJoPaTo/telegraf-stateless-question",
+	"author": {
+		"name": "EdJoPaTo",
+		"email": "telegraf-npm-package@edjopato.de",
+		"url": "https://edjopato.de"
+	},
+	"scripts": {
+		"build": "del-cli dist && tsc",
+		"prepack": "npm run build",
+		"test": "tsc --sourceMap && xo && nyc ava"
+	},
+	"engines": {
+		"node": ">=10"
+	},
+	"dependencies": {
+		"telegram-format": "^2.0.0"
+	},
+	"peerDependencies": {
+		"telegraf": "^3.37.0"
+	},
+	"devDependencies": {
+		"@sindresorhus/tsconfig": "^0.7.0",
+		"@types/node": "^13.1.4",
+		"ava": "^3.0.0",
+		"del-cli": "^3.0.0",
+		"nyc": "^15.0.0",
+		"typescript": "^3.7.4",
+		"xo": "^0.29.1"
+	},
+	"files": [
+		"dist/source",
+		"!*.test.*"
+	],
+	"main": "dist/source",
+	"types": "dist/source",
+	"nyc": {
+		"all": true,
+		"extension": [
+			".ts"
+		],
+		"include": [
+			"dist/source",
+			"source"
+		],
+		"exclude": [
+			"**/*.d.ts",
+			"**/*.test.ts"
+		],
+		"reporter": [
+			"lcov",
+			"text"
+		]
+	},
+	"xo": {
+		"semicolon": false,
+		"rules": {
+			"@typescript-eslint/prefer-readonly-parameter-types": "warn",
+			"ava/no-ignored-test-files": "off"
+		},
+		"overrides": [
+			{
+				"files": [
+					"**/*.test.*",
+					"test/**/*.*"
+				],
+				"rules": {
+					"@typescript-eslint/prefer-readonly-parameter-types": "off"
+				}
+			}
+		]
+	}
+}
