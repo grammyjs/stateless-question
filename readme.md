@@ -13,7 +13,7 @@ You want to keep the privacy of the user with [Telegrams privacy mode enabled (b
 
 This library wants to solve this problem.
 
-The basic idea is to send you question test with a [special text](https://en.wikipedia.org/wiki/Zero-width_non-joiner) at the end.
+The basic idea is to send your question with a [special text](https://en.wikipedia.org/wiki/Zero-width_non-joiner) at the end.
 This text is invisible to the user but still visible for your bot.
 When the user replies to a message the message is checked.
 If it is containing this special text at the end it is an answer to the question.
