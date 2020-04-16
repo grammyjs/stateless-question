@@ -45,11 +45,14 @@ const unicornQuestion = new TelegrafStatelessQuestion('unicorns', ctx => {
 bot.use(unicornQuestion.middleware())
 
 bot.command('rainbows', async ctx => {
+	let text
 	if (ctx.session.language === 'de') {
-		return unicornQuestion.replyWithMarkdown('Was machen Einhörner?')
+		text = 'Was machen Einhörner?'
+	} else {
+		text = 'What are unicorns doing?'
 	}
 
-	return unicornQuestion.replyWithMarkdown('What are unicorns doing?')
+	return unicornQuestion.replyWithMarkdown(text)
 })
 
 // Or send your question manually (make sure to use Markdown or HTML and forceReply!)
