@@ -1,4 +1,4 @@
-import {ContextMessageUpdate as TelegrafContext} from 'telegraf'
+import {Context as TelegrafContext} from 'telegraf'
 
 import {markdown, html} from 'telegram-format'
 

@@ -1,4 +1,4 @@
-import {ContextMessageUpdate as TelegrafContext, Middleware, Extra, Markup} from 'telegraf'
+import {Context as TelegrafContext, Middleware, Extra, Markup} from 'telegraf'
 import {Message} from 'telegraf/typings/telegram-types'
 
 import {suffixHTML, suffixMarkdown, isReplyToQuestion, ReplyToMessageContext} from './identifier'
