@@ -52,7 +52,7 @@ bot.command('rainbows', async ctx => {
 		text = 'What are unicorns doing?'
 	}
 
-	return unicornQuestion.replyWithMarkdown(text)
+	return unicornQuestion.replyWithMarkdown(ctx, text)
 })
 
 // Or send your question manually (make sure to use Markdown or HTML and forceReply!)
