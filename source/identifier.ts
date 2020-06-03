@@ -1,6 +1,6 @@
 import {Context as TelegrafContext} from 'telegraf'
-
 import {markdown, html} from 'telegram-format'
+import {MessageEntity} from 'telegraf/typings/telegram-types'
 
 const URL_TEXT = '\u200C'
 const BASE_URL = 'http://t.me/#'
@@ -16,7 +16,7 @@ export function isReplyToQuestion<Context extends TelegrafContext>(ctx: Context,
 	const entities = repliedTo.entities ?? repliedTo.caption_entities ?? []
 	const relevantEntity = entities
 		.filter(o => o.type === 'text_link')
-		.slice(-1)[0]
+		.slice(-1)[0] as MessageEntity | undefined
 	if (!relevantEntity?.url?.startsWith(BASE_URL)) {
 		return false
 	}

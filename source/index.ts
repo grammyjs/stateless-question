@@ -24,7 +24,7 @@ export default class TelegrafStatelessQuestion<Context extends TelegrafContext> 
 				return this._answer(context)
 			}
 
-			await next?.()
+			await next()
 		}
 	}
 
