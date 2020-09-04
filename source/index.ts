@@ -1,7 +1,7 @@
 import {Context as TelegrafContext, Middleware} from 'telegraf'
 import {Message} from 'telegraf/typings/telegram-types'
 
-import {suffixHTML, suffixMarkdown, suffixMarkdownV2, isReplyToQuestion, ReplyToMessageContext} from './identifier'
+import {suffixHTML, suffixMarkdown, suffixMarkdownV2, isContextReplyToMessage, isReplyToQuestion, ReplyToMessageContext} from './identifier'
 
 type ConstOrPromise<T> = T | Promise<T>
 type ContextFunc<Context, ReturnType> = (context: Context) => ConstOrPromise<ReturnType>
@@ -14,7 +14,7 @@ export default class TelegrafStatelessQuestion<Context extends TelegrafContext> 
 
 	middleware(): Middleware<Context> {
 		return async (context, next) => {
-			if (isReplyToQuestion(context, this.uniqueIdentifier)) {
+			if (isContextReplyToMessage(context) && isReplyToQuestion(context, this.uniqueIdentifier)) {
 				return this.answer(context)
 			}
 

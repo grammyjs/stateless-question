@@ -6,17 +6,23 @@ const URL_TEXT = '\u200C'
 const BASE_URL = 'http://t.me/#'
 
 export type ReplyToMessageContext<Context extends TelegrafContext> = Context & {message: NonNullable<TelegrafContext['message']> & {reply_to_message: NonNullable<NonNullable<TelegrafContext['message']>['reply_to_message']>}}
+export type UrlMessageEntity = Readonly<MessageEntity & {type: 'text_link'; url: NonNullable<MessageEntity['url']>}>
 
-export function isReplyToQuestion<Context extends TelegrafContext>(ctx: Context, identifier: string): ctx is ReplyToMessageContext<Context> {
-	const repliedTo = ctx.message?.reply_to_message
-	if (!repliedTo) {
-		return false
+export function isContextReplyToMessage<Context extends TelegrafContext>(context: Context): context is ReplyToMessageContext<Context> {
+	return Boolean(context.message?.reply_to_message)
 	}
 
+function getRelevantEntity<Context extends TelegrafContext>(context: ReplyToMessageContext<Context>): UrlMessageEntity | undefined {
+	const repliedTo = context.message.reply_to_message
 	const entities: ReadonlyArray<Readonly<MessageEntity>> = repliedTo.entities ?? repliedTo.caption_entities ?? []
 	const relevantEntity = entities
-		.filter(o => o.type === 'text_link')
-		.slice(-1)[0] as MessageEntity | undefined
+		.slice(-1)
+		.find((o): o is UrlMessageEntity => o.type === 'text_link')
+	return relevantEntity
+}
+
+export function isReplyToQuestion<Context extends TelegrafContext>(context: ReplyToMessageContext<Context>, identifier: string): boolean {
+	const relevantEntity = getRelevantEntity(context)
 	const expectedUrl = url(identifier)
 	return relevantEntity?.url === expectedUrl
 }
