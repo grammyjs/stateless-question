@@ -17,22 +17,22 @@ export function isReplyToQuestion<Context extends TelegrafContext>(ctx: Context,
 	const relevantEntity = entities
 		.filter(o => o.type === 'text_link')
 		.slice(-1)[0] as MessageEntity | undefined
-	if (!relevantEntity?.url?.startsWith(BASE_URL)) {
-		return false
-	}
+	const expectedUrl = url(identifier)
+	return relevantEntity?.url === expectedUrl
+}
 
-	const repliedToIdentifier = relevantEntity.url.slice(BASE_URL.length)
-	return repliedToIdentifier === identifier
+function url(identifier: string): string {
+	return BASE_URL + identifier
 }
 
 export function suffixMarkdown(identifier: string): string {
-	return markdown.url(URL_TEXT, BASE_URL + identifier)
+	return markdown.url(URL_TEXT, url(identifier))
 }
 
 export function suffixMarkdownV2(identifier: string): string {
-	return markdownv2.url(URL_TEXT, BASE_URL + identifier)
+	return markdownv2.url(URL_TEXT, url(identifier))
 }
 
 export function suffixHTML(identifier: string): string {
-	return html.url(URL_TEXT, BASE_URL + identifier)
+	return html.url(URL_TEXT, url(identifier))
 }
