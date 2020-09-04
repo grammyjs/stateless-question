@@ -13,7 +13,7 @@ export function isReplyToQuestion<Context extends TelegrafContext>(ctx: Context,
 		return false
 	}
 
-	const entities = repliedTo.entities ?? repliedTo.caption_entities ?? []
+	const entities: ReadonlyArray<Readonly<MessageEntity>> = repliedTo.entities ?? repliedTo.caption_entities ?? []
 	const relevantEntity = entities
 		.filter(o => o.type === 'text_link')
 		.slice(-1)[0] as MessageEntity | undefined
