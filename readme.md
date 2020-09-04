@@ -59,3 +59,27 @@ bot.command('rainbows', async ctx => {
 bot.command('unicorn', async ctx => ctx.replyWithMarkdown('What are unicorns doing?' + unicornQuestion.messageSuffixMarkdown(), Extra.markdown().markup(Markup.forceReply()))
 bot.command('unicorn', async ctx => ctx.replyWithHTML(    'What are unicorns doing?' + unicornQuestion.messageSuffixHTML(),     Extra.markdown().markup(Markup.forceReply()))
 ```
+
+### Additional State
+
+When your question is specific for a certain topic then you can use the `additionalState` to remember that stateless with the message.
+For example when you want to know in which room an event is happening you can set the event as additionalState.
+This also helpful when working with [telegraf-inline-menu](https://github.com/EdJoPaTo/telegraf-inline-menu) to store the path to return the menu to.
+
+```js
+const locationQuestion = new TelegrafStatelessQuestion('target', (ctx, additionalState) => {
+	console.log('Location of', additionalState, 'is', ctx.message.text)
+	saveHeroLocation(additionalState, ctx.message.text)
+})
+
+// Dont forget to use the middleware
+bot.use(locationQuestion.middleware())
+
+bot.command('batman', async ctx => {
+	return locationQuestion.replyWithMarkdown(ctx, 'Where is Batman?', 'batman')
+})
+
+bot.command('superman', async ctx => {
+	return locationQuestion.replyWithMarkdown(ctx, 'Where is superman?', 'superman')
+})
+```
