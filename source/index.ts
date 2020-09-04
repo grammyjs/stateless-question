@@ -13,7 +13,7 @@ export default class TelegrafStatelessQuestion<Context extends TelegrafContext> 
 
 	constructor(
 		public readonly uniqueIdentifier: string,
-		private readonly _answer: ContextFunc<ReplyToMessageContext<Context>, void>
+		private readonly answer: ContextFunc<ReplyToMessageContext<Context>, void>
 	) {
 		this.messageSuffixHTML = suffixHTML(uniqueIdentifier)
 		this.messageSuffixMarkdown = suffixMarkdown(uniqueIdentifier)
@@ -23,7 +23,7 @@ export default class TelegrafStatelessQuestion<Context extends TelegrafContext> 
 	middleware(): Middleware<Context> {
 		return async (context, next) => {
 			if (isReplyToQuestion(context, this.uniqueIdentifier)) {
-				return this._answer(context)
+				return this.answer(context)
 			}
 
 			await next()
