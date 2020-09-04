@@ -1,4 +1,4 @@
-import {Context as TelegrafContext, Middleware, Extra, Markup} from 'telegraf'
+import {Context as TelegrafContext, Middleware} from 'telegraf'
 import {Message} from 'telegraf/typings/telegram-types'
 
 import {suffixHTML, suffixMarkdown, isReplyToQuestion, ReplyToMessageContext} from './identifier'
@@ -30,12 +30,12 @@ export default class TelegrafStatelessQuestion<Context extends TelegrafContext> 
 
 	async replyWithHTML(context: TelegrafContext, text: string): Promise<Message> {
 		const textResult = text + this.messageSuffixHTML
-		return context.replyWithHTML(textResult, Extra.markup(Markup.forceReply()))
+		return context.reply(textResult, {reply_markup: {force_reply: true}, parse_mode: 'HTML'})
 	}
 
 	async replyWithMarkdown(context: TelegrafContext, text: string): Promise<Message> {
 		const textResult = text + this.messageSuffixMarkdown
-		return context.replyWithMarkdown(textResult, Extra.markup(Markup.forceReply()))
+		return context.reply(textResult, {reply_markup: {force_reply: true}, parse_mode: 'Markdown'})
 	}
 }
 

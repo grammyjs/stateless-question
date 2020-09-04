@@ -33,20 +33,19 @@ test('can replyWithMarkdown the question correctly', async t => {
 	})
 
 	const bot = new Telegraf('')
-	bot.context.reply = () => {
-		t.fail('expect replyWithMarkdown')
-		throw new Error('expect replyWithMarkdown')
-	}
-
 	bot.context.replyWithHTML = () => {
-		t.fail('expect replyWithMarkdown')
-		throw new Error('expect replyWithMarkdown')
+		throw new Error('expect reply')
 	}
 
-	bot.context.replyWithMarkdown = async (text, extra) => {
+	bot.context.replyWithMarkdown = () => {
+		throw new Error('expect reply')
+	}
+
+	bot.context.reply = async (text, extra) => {
 		t.is(text, 'banana' + question.messageSuffixMarkdown)
-		t.deepEqual(extra?.reply_markup, {
-			force_reply: true
+		t.deepEqual(extra, {
+			parse_mode: 'Markdown',
+			reply_markup: {force_reply: true}
 		})
 
 		return {
@@ -68,20 +67,19 @@ test('can replyWithHTML the question correctly', async t => {
 	})
 
 	const bot = new Telegraf('')
-	bot.context.reply = () => {
-		t.fail('expect replyWithHTML')
-		throw new Error('expect replyWithHTML')
+	bot.context.replyWithHTML = () => {
+		throw new Error('expect reply')
 	}
 
 	bot.context.replyWithMarkdown = () => {
-		t.fail('expect replyWithHTML')
-		throw new Error('expect replyWithHTML')
+		throw new Error('expect reply')
 	}
 
-	bot.context.replyWithHTML = async (text, extra) => {
+	bot.context.reply = async (text, extra) => {
 		t.is(text, 'banana' + question.messageSuffixHTML)
-		t.deepEqual(extra?.reply_markup, {
-			force_reply: true
+		t.deepEqual(extra, {
+			parse_mode: 'HTML',
+			reply_markup: {force_reply: true}
 		})
 
 		return {
