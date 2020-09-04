@@ -51,7 +51,7 @@ test('can replyWithMarkdown the question correctly', async t => {
 	}
 
 	bot.context.reply = async (text, extra) => {
-		t.is(text, 'banana' + suffixMarkdown('unicorns', undefined))
+		t.is(text, 'banana' + question.messageSuffixMarkdown())
 		t.deepEqual(extra, {
 			parse_mode: 'Markdown',
 			reply_markup: {force_reply: true}
@@ -85,7 +85,7 @@ test('can replyWithMarkdownV2 the question correctly', async t => {
 	}
 
 	bot.context.reply = async (text, extra) => {
-		t.is(text, 'banana' + suffixMarkdown('unicorns', undefined))
+		t.is(text, 'banana' + question.messageSuffixMarkdown())
 		t.deepEqual(extra, {
 			parse_mode: 'MarkdownV2',
 			reply_markup: {force_reply: true}
@@ -119,7 +119,7 @@ test('can replyWithHTML the question correctly', async t => {
 	}
 
 	bot.context.reply = async (text, extra) => {
-		t.is(text, 'banana' + suffixHTML('unicorns', undefined))
+		t.is(text, 'banana' + question.messageSuffixHTML())
 		t.deepEqual(extra, {
 			parse_mode: 'HTML',
 			reply_markup: {force_reply: true}
