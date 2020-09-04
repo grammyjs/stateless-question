@@ -1,5 +1,6 @@
-import {Context as TelegrafContext, Middleware} from 'telegraf'
+import {Context as TelegrafContext} from 'telegraf'
 import {Message} from 'telegraf/typings/telegram-types'
+import {MiddlewareFn} from 'telegraf/typings/composer'
 
 import {suffixHTML, suffixMarkdown, suffixMarkdownV2, isContextReplyToMessage, isReplyToQuestion, ReplyToMessageContext, getAdditionalState} from './identifier'
 
@@ -11,7 +12,7 @@ export default class TelegrafStatelessQuestion<Context extends TelegrafContext> 
 		private readonly answer: (context: ReplyToMessageContext<Context>, additionalState: string) => ConstOrPromise<void>
 	) {}
 
-	middleware(): Middleware<Context> {
+	middleware(): MiddlewareFn<Context> {
 		return async (context, next) => {
 			if (isContextReplyToMessage(context) && isReplyToQuestion(context, this.uniqueIdentifier)) {
 				const additionalState = getAdditionalState(context, this.uniqueIdentifier)
