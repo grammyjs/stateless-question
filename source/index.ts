@@ -1,7 +1,7 @@
 import {Context as TelegrafContext, Middleware} from 'telegraf'
 import {Message} from 'telegraf/typings/telegram-types'
 
-import {suffixHTML, suffixMarkdown, isReplyToQuestion, ReplyToMessageContext} from './identifier'
+import {suffixHTML, suffixMarkdown, suffixMarkdownV2, isReplyToQuestion, ReplyToMessageContext} from './identifier'
 
 type ConstOrPromise<T> = T | Promise<T>
 type ContextFunc<Context, ReturnType> = (context: Context) => ConstOrPromise<ReturnType>
@@ -9,6 +9,7 @@ type ContextFunc<Context, ReturnType> = (context: Context) => ConstOrPromise<Ret
 export default class TelegrafStatelessQuestion<Context extends TelegrafContext> {
 	public readonly messageSuffixHTML: string
 	public readonly messageSuffixMarkdown: string
+	public readonly messageSuffixMarkdownV2: string
 
 	constructor(
 		public readonly uniqueIdentifier: string,
@@ -16,6 +17,7 @@ export default class TelegrafStatelessQuestion<Context extends TelegrafContext> 
 	) {
 		this.messageSuffixHTML = suffixHTML(uniqueIdentifier)
 		this.messageSuffixMarkdown = suffixMarkdown(uniqueIdentifier)
+		this.messageSuffixMarkdownV2 = suffixMarkdownV2(uniqueIdentifier)
 	}
 
 	middleware(): Middleware<Context> {
@@ -36,6 +38,11 @@ export default class TelegrafStatelessQuestion<Context extends TelegrafContext> 
 	async replyWithMarkdown(context: TelegrafContext, text: string): Promise<Message> {
 		const textResult = text + this.messageSuffixMarkdown
 		return context.reply(textResult, {reply_markup: {force_reply: true}, parse_mode: 'Markdown'})
+	}
+
+	async replyWithMarkdownV2(context: TelegrafContext, text: string): Promise<Message> {
+		const textResult = text + this.messageSuffixMarkdownV2
+		return context.reply(textResult, {reply_markup: {force_reply: true}, parse_mode: 'MarkdownV2'})
 	}
 }
 
