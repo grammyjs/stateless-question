@@ -1,6 +1,7 @@
 import test from 'ava'
 import Telegraf from 'telegraf'
 
+import {suffixHTML, suffixMarkdown, suffixMarkdownV2} from '../source/identifier'
 import TelegrafStatelessQuestion from '../source'
 
 test('uniqueIdentifier keeps the same', t => {
@@ -12,19 +13,15 @@ test('uniqueIdentifier keeps the same', t => {
 })
 
 test('messageSuffixMarkdown', t => {
-	const question = new TelegrafStatelessQuestion('unicorns', () => {
-		t.pass()
+	t.is(suffixMarkdown('unicorns'), '[\u200C](http://t.me/#unicorns)')
 	})
 
-	t.is(question.messageSuffixMarkdown, '[\u200C](http://t.me/#unicorns)')
+test('messageSuffixMarkdownV2', t => {
+	t.is(suffixMarkdownV2('unicorns'), '[\u200C](http://t.me/#unicorns)')
 })
 
 test('messageSuffixHTML', t => {
-	const question = new TelegrafStatelessQuestion('unicorns', () => {
-		t.pass()
-	})
-
-	t.is(question.messageSuffixHTML, '<a href="http://t.me/#unicorns">\u200C</a>')
+	t.is(suffixHTML('unicorns'), '<a href="http://t.me/#unicorns">\u200C</a>')
 })
 
 test('can replyWithMarkdown the question correctly', async t => {
