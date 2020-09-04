@@ -58,6 +58,40 @@ test('can replyWithMarkdown the question correctly', async t => {
 	})
 })
 
+test('can replyWithMarkdownV2 the question correctly', async t => {
+	const question = new TelegrafStatelessQuestion('unicorns', () => {
+		t.fail()
+	})
+
+	const bot = new Telegraf('')
+	bot.context.replyWithHTML = () => {
+		throw new Error('expect reply')
+	}
+
+	bot.context.replyWithMarkdown = () => {
+		throw new Error('expect reply')
+	}
+
+	bot.context.reply = async (text, extra) => {
+		t.is(text, 'banana' + suffixMarkdown('unicorns'))
+		t.deepEqual(extra, {
+			parse_mode: 'MarkdownV2',
+			reply_markup: {force_reply: true}
+		})
+
+		return {
+			message_id: 42,
+			date: 42,
+			chat: {id: 42, type: 'private'}
+		}
+	}
+
+	bot.use(async ctx => question.replyWithMarkdownV2(ctx, 'banana'))
+	await bot.handleUpdate({
+		update_id: 42
+	})
+})
+
 test('can replyWithHTML the question correctly', async t => {
 	const question = new TelegrafStatelessQuestion('unicorns', () => {
 		t.fail()
