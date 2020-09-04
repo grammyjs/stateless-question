@@ -13,15 +13,27 @@ test('uniqueIdentifier keeps the same', t => {
 })
 
 test('messageSuffixMarkdown', t => {
-	t.is(suffixMarkdown('unicorns'), '[\u200C](http://t.me/#unicorns)')
+	t.is(suffixMarkdown('unicorns', undefined), '[\u200C](http://t.me/#unicorns#)')
+})
+
+test('messageSuffixMarkdown with additional state', t => {
+	t.is(suffixMarkdown('unicorns', 'explode'), '[\u200C](http://t.me/#unicorns#explode)')
 })
 
 test('messageSuffixMarkdownV2', t => {
-	t.is(suffixMarkdownV2('unicorns'), '[\u200C](http://t.me/#unicorns)')
+	t.is(suffixMarkdownV2('unicorns', undefined), '[\u200C](http://t.me/#unicorns#)')
+})
+
+test('messageSuffixMarkdownV2 with additional state', t => {
+	t.is(suffixMarkdownV2('unicorns', 'explode'), '[\u200C](http://t.me/#unicorns#explode)')
 })
 
 test('messageSuffixHTML', t => {
-	t.is(suffixHTML('unicorns'), '<a href="http://t.me/#unicorns">\u200C</a>')
+	t.is(suffixHTML('unicorns', undefined), '<a href="http://t.me/#unicorns#">\u200C</a>')
+})
+
+test('messageSuffixHTML with additional state', t => {
+	t.is(suffixHTML('unicorns', 'explode'), '<a href="http://t.me/#unicorns#explode">\u200C</a>')
 })
 
 test('can replyWithMarkdown the question correctly', async t => {
@@ -39,7 +51,7 @@ test('can replyWithMarkdown the question correctly', async t => {
 	}
 
 	bot.context.reply = async (text, extra) => {
-		t.is(text, 'banana' + suffixMarkdown('unicorns'))
+		t.is(text, 'banana' + suffixMarkdown('unicorns', undefined))
 		t.deepEqual(extra, {
 			parse_mode: 'Markdown',
 			reply_markup: {force_reply: true}
@@ -73,7 +85,7 @@ test('can replyWithMarkdownV2 the question correctly', async t => {
 	}
 
 	bot.context.reply = async (text, extra) => {
-		t.is(text, 'banana' + suffixMarkdown('unicorns'))
+		t.is(text, 'banana' + suffixMarkdown('unicorns', undefined))
 		t.deepEqual(extra, {
 			parse_mode: 'MarkdownV2',
 			reply_markup: {force_reply: true}
@@ -107,7 +119,7 @@ test('can replyWithHTML the question correctly', async t => {
 	}
 
 	bot.context.reply = async (text, extra) => {
-		t.is(text, 'banana' + suffixHTML('unicorns'))
+		t.is(text, 'banana' + suffixHTML('unicorns', undefined))
 		t.deepEqual(extra, {
 			parse_mode: 'HTML',
 			reply_markup: {force_reply: true}
@@ -247,7 +259,7 @@ test('ignores message replying to another question', async t => {
 				text: 'whatever',
 				entities: [{
 					type: 'text_link',
-					url: 'http://t.me/#other',
+					url: 'http://t.me/#other#',
 					offset: 0,
 					length: 2
 				}]
@@ -280,7 +292,41 @@ test('correctly works with text message', async t => {
 				text: 'whatever',
 				entities: [{
 					type: 'text_link',
-					url: 'http://t.me/#unicorns',
+					url: 'http://t.me/#unicorns#',
+					offset: 0,
+					length: 2
+				}]
+			}
+		}
+	})
+})
+
+test('correctly works with text message with additional state', async t => {
+	const bot = new Telegraf('')
+	const question = new TelegrafStatelessQuestion('unicorns', (ctx, additionalState) => {
+		t.is(ctx.message.message_id, 42)
+		t.is(ctx.message.reply_to_message.message_id, 43)
+		t.is(additionalState, 'explode')
+	})
+	bot.use(question.middleware())
+	bot.use(() => {
+		t.fail()
+	})
+
+	await bot.handleUpdate({
+		update_id: 42,
+		message: {
+			message_id: 42,
+			chat: {id: 42, type: 'private'},
+			date: 42,
+			reply_to_message: {
+				message_id: 43,
+				chat: {id: 42, type: 'private'},
+				date: 10,
+				text: 'whatever',
+				entities: [{
+					type: 'text_link',
+					url: 'http://t.me/#unicorns#explode',
 					offset: 0,
 					length: 2
 				}]
@@ -314,7 +360,7 @@ test('correctly works with media message', async t => {
 				caption: 'whatever',
 				caption_entities: [{
 					type: 'text_link',
-					url: 'http://t.me/#unicorns',
+					url: 'http://t.me/#unicorns#',
 					offset: 0,
 					length: 2
 				}]
