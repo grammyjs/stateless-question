@@ -14,7 +14,7 @@ test('uniqueIdentifier keeps the same', t => {
 
 test('messageSuffixMarkdown', t => {
 	t.is(suffixMarkdown('unicorns'), '[\u200C](http://t.me/#unicorns)')
-	})
+})
 
 test('messageSuffixMarkdownV2', t => {
 	t.is(suffixMarkdownV2('unicorns'), '[\u200C](http://t.me/#unicorns)')
@@ -39,7 +39,7 @@ test('can replyWithMarkdown the question correctly', async t => {
 	}
 
 	bot.context.reply = async (text, extra) => {
-		t.is(text, 'banana' + question.messageSuffixMarkdown)
+		t.is(text, 'banana' + suffixMarkdown('unicorns'))
 		t.deepEqual(extra, {
 			parse_mode: 'Markdown',
 			reply_markup: {force_reply: true}
@@ -73,7 +73,7 @@ test('can replyWithHTML the question correctly', async t => {
 	}
 
 	bot.context.reply = async (text, extra) => {
-		t.is(text, 'banana' + question.messageSuffixHTML)
+		t.is(text, 'banana' + suffixHTML('unicorns'))
 		t.deepEqual(extra, {
 			parse_mode: 'HTML',
 			reply_markup: {force_reply: true}
