@@ -4,12 +4,11 @@ import {Message} from 'telegraf/typings/telegram-types'
 import {suffixHTML, suffixMarkdown, suffixMarkdownV2, isContextReplyToMessage, isReplyToQuestion, ReplyToMessageContext} from './identifier'
 
 type ConstOrPromise<T> = T | Promise<T>
-type ContextFunc<Context, ReturnType> = (context: Context) => ConstOrPromise<ReturnType>
 
 export default class TelegrafStatelessQuestion<Context extends TelegrafContext> {
 	constructor(
 		public readonly uniqueIdentifier: string,
-		private readonly answer: ContextFunc<ReplyToMessageContext<Context>, void>
+		private readonly answer: (context: ReplyToMessageContext<Context>) => ConstOrPromise<void>
 	) {}
 
 	middleware(): Middleware<Context> {
