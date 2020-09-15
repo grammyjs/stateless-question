@@ -1,13 +1,13 @@
 import {Context as TelegrafContext} from 'telegraf'
 import {markdown, markdownv2, html} from 'telegram-format'
-import {MessageEntity} from 'telegraf/typings/telegram-types'
+import {MessageEntity} from 'typegram'
 
 const URL_TEXT = '\u200C'
 const BASE_URL = 'http://t.me/#'
 const URL_SEPERATOR = '#'
 
 export type ReplyToMessageContext<Context extends TelegrafContext> = Context & {message: NonNullable<TelegrafContext['message']> & {reply_to_message: NonNullable<NonNullable<TelegrafContext['message']>['reply_to_message']>}}
-export type UrlMessageEntity = Readonly<MessageEntity & {type: 'text_link'; url: NonNullable<MessageEntity['url']>}>
+export type UrlMessageEntity = Readonly<MessageEntity.TextLinkMessageEntity>
 
 export function isContextReplyToMessage<Context extends TelegrafContext>(context: Context): context is ReplyToMessageContext<Context> {
 	return Boolean(context.message?.reply_to_message)
@@ -15,7 +15,7 @@ export function isContextReplyToMessage<Context extends TelegrafContext>(context
 
 function getRelevantEntity<Context extends TelegrafContext>(context: ReplyToMessageContext<Context>): UrlMessageEntity | undefined {
 	const repliedTo = context.message.reply_to_message
-	const entities: ReadonlyArray<Readonly<MessageEntity>> = repliedTo.entities ?? repliedTo.caption_entities ?? []
+	const entities: ReadonlyArray<Readonly<MessageEntity>> = (repliedTo.entities ?? repliedTo.caption_entities ?? []) as MessageEntity[]
 	const relevantEntity = entities
 		.slice(-1)
 		.find((o): o is UrlMessageEntity => o.type === 'text_link')
