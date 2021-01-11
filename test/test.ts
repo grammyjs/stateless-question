@@ -1,5 +1,5 @@
 import test from 'ava'
-import Telegraf from 'telegraf'
+import {Telegraf} from 'telegraf'
 
 import {suffixHTML, suffixMarkdown, suffixMarkdownV2} from '../source/identifier'
 import TelegrafStatelessQuestion from '../source'
@@ -42,6 +42,7 @@ test('can replyWithMarkdown the question correctly', async t => {
 	})
 
 	const bot = new Telegraf('')
+	bot.botInfo = {} as any
 	bot.context.replyWithHTML = () => {
 		throw new Error('expect reply')
 	}
@@ -60,14 +61,16 @@ test('can replyWithMarkdown the question correctly', async t => {
 		return {
 			message_id: 42,
 			date: 42,
-			chat: {id: 42, type: 'private'}
+			from: {id: 42, first_name: 'Bob', is_bot: true},
+			chat: {id: 42, type: 'private', first_name: 'Bob'},
+			text: '666'
 		}
 	}
 
 	bot.use(async ctx => question.replyWithMarkdown(ctx, 'banana'))
 	await bot.handleUpdate({
 		update_id: 42
-	})
+	} as any)
 })
 
 test('can replyWithMarkdownV2 the question correctly', async t => {
@@ -76,6 +79,7 @@ test('can replyWithMarkdownV2 the question correctly', async t => {
 	})
 
 	const bot = new Telegraf('')
+	bot.botInfo = {} as any
 	bot.context.replyWithHTML = () => {
 		throw new Error('expect reply')
 	}
@@ -94,14 +98,16 @@ test('can replyWithMarkdownV2 the question correctly', async t => {
 		return {
 			message_id: 42,
 			date: 42,
-			chat: {id: 42, type: 'private'}
+			from: {id: 42, first_name: 'Bob', is_bot: true},
+			chat: {id: 42, type: 'private', first_name: 'Bob'},
+			text: '666'
 		}
 	}
 
 	bot.use(async ctx => question.replyWithMarkdownV2(ctx, 'banana'))
 	await bot.handleUpdate({
 		update_id: 42
-	})
+	} as any)
 })
 
 test('can replyWithHTML the question correctly', async t => {
@@ -110,6 +116,7 @@ test('can replyWithHTML the question correctly', async t => {
 	})
 
 	const bot = new Telegraf('')
+	bot.botInfo = {} as any
 	bot.context.replyWithHTML = () => {
 		throw new Error('expect reply')
 	}
@@ -128,18 +135,21 @@ test('can replyWithHTML the question correctly', async t => {
 		return {
 			message_id: 42,
 			date: 42,
-			chat: {id: 42, type: 'private'}
+			from: {id: 42, first_name: 'Bob', is_bot: true},
+			chat: {id: 42, type: 'private', first_name: 'Bob'},
+			text: '666'
 		}
 	}
 
 	bot.use(async ctx => question.replyWithHTML(ctx, 'banana'))
 	await bot.handleUpdate({
 		update_id: 42
-	})
+	} as any)
 })
 
 test('ignores different update', async t => {
 	const bot = new Telegraf('')
+	bot.botInfo = {} as any
 	const question = new TelegrafStatelessQuestion('unicorns', () => {
 		t.fail()
 	})
@@ -153,13 +163,15 @@ test('ignores different update', async t => {
 		callback_query: {
 			id: '42',
 			from: {id: 42, is_bot: false, first_name: 'Bob'},
-			chat_instance: '42'
+			chat_instance: '42',
+			data: '666'
 		}
 	})
 })
 
 test('ignores different message', async t => {
 	const bot = new Telegraf('')
+	bot.botInfo = {} as any
 	const question = new TelegrafStatelessQuestion('unicorns', () => {
 		t.fail()
 	})
@@ -172,7 +184,8 @@ test('ignores different message', async t => {
 		update_id: 42,
 		message: {
 			message_id: 42,
-			chat: {id: 42, type: 'private'},
+			from: {id: 42, first_name: 'Bob', is_bot: true},
+			chat: {id: 42, type: 'private', first_name: 'Bob'},
 			date: 42
 		}
 	})
@@ -180,6 +193,7 @@ test('ignores different message', async t => {
 
 test('ignores message replying to something else', async t => {
 	const bot = new Telegraf('')
+	bot.botInfo = {} as any
 	const question = new TelegrafStatelessQuestion('unicorns', () => {
 		t.fail()
 	})
@@ -192,12 +206,15 @@ test('ignores message replying to something else', async t => {
 		update_id: 42,
 		message: {
 			message_id: 42,
-			chat: {id: 42, type: 'private'},
+			from: {id: 42, first_name: 'Bob', is_bot: true},
+			chat: {id: 42, type: 'private', first_name: 'Bob'},
 			date: 42,
 			reply_to_message: {
 				message_id: 43,
-				chat: {id: 42, type: 'private'},
+				from: {id: 42, first_name: 'Bob', is_bot: true},
+				chat: {id: 42, type: 'private', first_name: 'Bob'},
 				date: 10,
+				// @ts-expect-error typegram typings seem strange here
 				text: 'whatever'
 			}
 		}
@@ -206,6 +223,7 @@ test('ignores message replying to something else', async t => {
 
 test('ignores message replying to something else with entities', async t => {
 	const bot = new Telegraf('')
+	bot.botInfo = {} as any
 	const question = new TelegrafStatelessQuestion('unicorns', () => {
 		t.fail()
 	})
@@ -218,12 +236,15 @@ test('ignores message replying to something else with entities', async t => {
 		update_id: 42,
 		message: {
 			message_id: 42,
-			chat: {id: 42, type: 'private'},
+			from: {id: 42, first_name: 'Bob', is_bot: true},
+			chat: {id: 42, type: 'private', first_name: 'Bob'},
 			date: 42,
 			reply_to_message: {
 				message_id: 43,
-				chat: {id: 42, type: 'private'},
+				from: {id: 42, first_name: 'Bob', is_bot: true},
+				chat: {id: 42, type: 'private', first_name: 'Bob'},
 				date: 10,
+				// @ts-expect-error typegram typings seem strange here
 				text: 'whatever',
 				entities: [{
 					type: 'text_link',
@@ -238,6 +259,7 @@ test('ignores message replying to something else with entities', async t => {
 
 test('ignores message replying to another question', async t => {
 	const bot = new Telegraf('')
+	bot.botInfo = {} as any
 	const question = new TelegrafStatelessQuestion('unicorns', () => {
 		t.fail()
 	})
@@ -250,12 +272,15 @@ test('ignores message replying to another question', async t => {
 		update_id: 42,
 		message: {
 			message_id: 42,
-			chat: {id: 42, type: 'private'},
+			from: {id: 42, first_name: 'Bob', is_bot: true},
+			chat: {id: 42, type: 'private', first_name: 'Bob'},
 			date: 42,
 			reply_to_message: {
 				message_id: 43,
-				chat: {id: 42, type: 'private'},
+				from: {id: 42, first_name: 'Bob', is_bot: true},
+				chat: {id: 42, type: 'private', first_name: 'Bob'},
 				date: 10,
+				// @ts-expect-error typegram typings seem strange here
 				text: 'whatever',
 				entities: [{
 					type: 'text_link',
@@ -270,6 +295,7 @@ test('ignores message replying to another question', async t => {
 
 test('correctly works with text message', async t => {
 	const bot = new Telegraf('')
+	bot.botInfo = {} as any
 	const question = new TelegrafStatelessQuestion('unicorns', ctx => {
 		t.is(ctx.message.message_id, 42)
 		t.is(ctx.message.reply_to_message.message_id, 43)
@@ -283,12 +309,15 @@ test('correctly works with text message', async t => {
 		update_id: 42,
 		message: {
 			message_id: 42,
-			chat: {id: 42, type: 'private'},
+			from: {id: 42, first_name: 'Bob', is_bot: true},
+			chat: {id: 42, type: 'private', first_name: 'Bob'},
 			date: 42,
 			reply_to_message: {
 				message_id: 43,
-				chat: {id: 42, type: 'private'},
+				from: {id: 42, first_name: 'Bob', is_bot: true},
+				chat: {id: 42, type: 'private', first_name: 'Bob'},
 				date: 10,
+				// @ts-expect-error typegram typings seem strange here
 				text: 'whatever',
 				entities: [{
 					type: 'text_link',
@@ -303,6 +332,7 @@ test('correctly works with text message', async t => {
 
 test('correctly works with text message with additional state', async t => {
 	const bot = new Telegraf('')
+	bot.botInfo = {} as any
 	const question = new TelegrafStatelessQuestion('unicorns', (ctx, additionalState) => {
 		t.is(ctx.message.message_id, 42)
 		t.is(ctx.message.reply_to_message.message_id, 43)
@@ -317,12 +347,15 @@ test('correctly works with text message with additional state', async t => {
 		update_id: 42,
 		message: {
 			message_id: 42,
-			chat: {id: 42, type: 'private'},
+			from: {id: 42, first_name: 'Bob', is_bot: true},
+			chat: {id: 42, type: 'private', first_name: 'Bob'},
 			date: 42,
 			reply_to_message: {
 				message_id: 43,
-				chat: {id: 42, type: 'private'},
+				from: {id: 42, first_name: 'Bob', is_bot: true},
+				chat: {id: 42, type: 'private', first_name: 'Bob'},
 				date: 10,
+				// @ts-expect-error typegram typings seem strange here
 				text: 'whatever',
 				entities: [{
 					type: 'text_link',
@@ -337,6 +370,7 @@ test('correctly works with text message with additional state', async t => {
 
 test('correctly works with media message', async t => {
 	const bot = new Telegraf('')
+	bot.botInfo = {} as any
 	const question = new TelegrafStatelessQuestion('unicorns', ctx => {
 		t.is(ctx.message.message_id, 42)
 		t.is(ctx.message.reply_to_message.message_id, 43)
@@ -350,12 +384,15 @@ test('correctly works with media message', async t => {
 		update_id: 42,
 		message: {
 			message_id: 42,
-			chat: {id: 42, type: 'private'},
+			from: {id: 42, first_name: 'Bob', is_bot: true},
+			chat: {id: 42, type: 'private', first_name: 'Bob'},
 			date: 42,
 			reply_to_message: {
 				message_id: 43,
-				chat: {id: 42, type: 'private'},
+				from: {id: 42, first_name: 'Bob', is_bot: true},
+				chat: {id: 42, type: 'private', first_name: 'Bob'},
 				date: 10,
+				// @ts-expect-error typegram typings seem strange here
 				photo: [],
 				caption: 'whatever',
 				caption_entities: [{

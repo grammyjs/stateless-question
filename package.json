@@ -24,7 +24,7 @@
 		"test": "tsc --sourceMap && xo && nyc ava"
 	},
 	"engines": {
-		"node": ">=10"
+		"node": ">=12"
 	},
 	"dependencies": {
 		"telegram-format": "^2.0.0"

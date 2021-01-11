@@ -1,6 +1,5 @@
-import {Context as TelegrafContext} from 'telegraf'
-import {Message} from 'telegraf/typings/telegram-types'
-import {MiddlewareFn} from 'telegraf/typings/composer'
+import {Context as TelegrafContext, MiddlewareFn} from 'telegraf'
+import {Message} from 'typegram'
 
 import {suffixHTML, suffixMarkdown, suffixMarkdownV2, isContextReplyToMessage, isReplyToQuestion, ReplyToMessageContext, getAdditionalState} from './identifier'
 
