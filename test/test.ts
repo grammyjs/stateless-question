@@ -214,9 +214,8 @@ test('ignores message replying to something else', async t => {
 				from: {id: 42, first_name: 'Bob', is_bot: true},
 				chat: {id: 42, type: 'private', first_name: 'Bob'},
 				date: 10,
-				// @ts-expect-error typegram typings seem strange here
 				text: 'whatever'
-			}
+			} as any
 		}
 	})
 })
@@ -244,7 +243,6 @@ test('ignores message replying to something else with entities', async t => {
 				from: {id: 42, first_name: 'Bob', is_bot: true},
 				chat: {id: 42, type: 'private', first_name: 'Bob'},
 				date: 10,
-				// @ts-expect-error typegram typings seem strange here
 				text: 'whatever',
 				entities: [{
 					type: 'text_link',
@@ -252,7 +250,7 @@ test('ignores message replying to something else with entities', async t => {
 					offset: 0,
 					length: 2
 				}]
-			}
+			} as any
 		}
 	})
 })
@@ -280,7 +278,6 @@ test('ignores message replying to another question', async t => {
 				from: {id: 42, first_name: 'Bob', is_bot: true},
 				chat: {id: 42, type: 'private', first_name: 'Bob'},
 				date: 10,
-				// @ts-expect-error typegram typings seem strange here
 				text: 'whatever',
 				entities: [{
 					type: 'text_link',
@@ -288,7 +285,7 @@ test('ignores message replying to another question', async t => {
 					offset: 0,
 					length: 2
 				}]
-			}
+			} as any
 		}
 	})
 })
@@ -317,7 +314,6 @@ test('correctly works with text message', async t => {
 				from: {id: 42, first_name: 'Bob', is_bot: true},
 				chat: {id: 42, type: 'private', first_name: 'Bob'},
 				date: 10,
-				// @ts-expect-error typegram typings seem strange here
 				text: 'whatever',
 				entities: [{
 					type: 'text_link',
@@ -325,7 +321,7 @@ test('correctly works with text message', async t => {
 					offset: 0,
 					length: 2
 				}]
-			}
+			} as any
 		}
 	})
 })
@@ -355,7 +351,6 @@ test('correctly works with text message with additional state', async t => {
 				from: {id: 42, first_name: 'Bob', is_bot: true},
 				chat: {id: 42, type: 'private', first_name: 'Bob'},
 				date: 10,
-				// @ts-expect-error typegram typings seem strange here
 				text: 'whatever',
 				entities: [{
 					type: 'text_link',
@@ -363,7 +358,7 @@ test('correctly works with text message with additional state', async t => {
 					offset: 0,
 					length: 2
 				}]
-			}
+			} as any
 		}
 	})
 })
@@ -392,7 +387,6 @@ test('correctly works with media message', async t => {
 				from: {id: 42, first_name: 'Bob', is_bot: true},
 				chat: {id: 42, type: 'private', first_name: 'Bob'},
 				date: 10,
-				// @ts-expect-error typegram typings seem strange here
 				photo: [],
 				caption: 'whatever',
 				caption_entities: [{
@@ -401,7 +395,7 @@ test('correctly works with media message', async t => {
 					offset: 0,
 					length: 2
 				}]
-			}
+			} as any
 		}
 	})
 })
