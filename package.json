@@ -70,7 +70,7 @@
 	"xo": {
 		"semicolon": false,
 		"rules": {
-			"@typescript-eslint/prefer-readonly-parameter-types": "warn",
+			"@typescript-eslint/prefer-readonly-parameter-types": "off",
 			"ava/no-ignored-test-files": "off"
 		},
 		"overrides": [
