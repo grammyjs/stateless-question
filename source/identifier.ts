@@ -6,6 +6,7 @@ const URL_TEXT = '\u200C'
 const BASE_URL = 'http://t.me/#'
 const URL_SEPERATOR = '#'
 
+// TODO: refactor when GuardedContext (or whatever its named) is out (see https://github.com/telegraf/telegraf/discussions/1284)
 type ReplyToMessage = Message // NonNullable<Message.CommonMessage['reply_to_message']>
 export type ReplyToMessageContext<Context extends TelegrafContext> = Context & {message: Message.CommonMessage & {reply_to_message: ReplyToMessage}}
 export type UrlMessageEntity = Readonly<MessageEntity.TextLinkMessageEntity>
