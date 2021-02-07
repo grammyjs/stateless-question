@@ -54,9 +54,9 @@ bot.command('rainbows', async ctx => {
 	return unicornQuestion.replyWithMarkdown(ctx, text)
 })
 
-// Or send your question manually (make sure to use Markdown or HTML and forceReply!)
-bot.command('unicorn', async ctx => ctx.replyWithMarkdown('What are unicorns doing?' + unicornQuestion.messageSuffixMarkdown(), Extra.markdown().markup(Markup.forceReply()))
-bot.command('unicorn', async ctx => ctx.replyWithHTML(    'What are unicorns doing?' + unicornQuestion.messageSuffixHTML(),     Extra.markdown().markup(Markup.forceReply()))
+// Or send your question manually (make sure to use a parse_mode and force_reply!)
+bot.command('unicorn', async ctx => ctx.replyWithMarkdown('What are unicorns doing?' + unicornQuestion.messageSuffixMarkdown(), {parse_mode: 'Markdown', reply_markup: {force_reply: true}})
+bot.command('unicorn', async ctx => ctx.replyWithHTML(    'What are unicorns doing?' + unicornQuestion.messageSuffixHTML(),     {parse_mode: 'HTML',     reply_markup: {force_reply: true}})
 ```
 
 ### Additional State
