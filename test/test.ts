@@ -186,7 +186,8 @@ test('ignores different message', async t => {
 			message_id: 42,
 			from: {id: 42, first_name: 'Bob', is_bot: true},
 			chat: {id: 42, type: 'private', first_name: 'Bob'},
-			date: 42
+			date: 42,
+			text: 'unrelated'
 		}
 	})
 })
@@ -209,6 +210,7 @@ test('ignores message replying to something else', async t => {
 			from: {id: 42, first_name: 'Bob', is_bot: true},
 			chat: {id: 42, type: 'private', first_name: 'Bob'},
 			date: 42,
+			text: 'unrelated',
 			reply_to_message: {
 				message_id: 43,
 				from: {id: 42, first_name: 'Bob', is_bot: true},
@@ -238,6 +240,7 @@ test('ignores message replying to something else with entities', async t => {
 			from: {id: 42, first_name: 'Bob', is_bot: true},
 			chat: {id: 42, type: 'private', first_name: 'Bob'},
 			date: 42,
+			text: 'unrelated',
 			reply_to_message: {
 				message_id: 43,
 				from: {id: 42, first_name: 'Bob', is_bot: true},
@@ -273,6 +276,7 @@ test('ignores message replying to another question', async t => {
 			from: {id: 42, first_name: 'Bob', is_bot: true},
 			chat: {id: 42, type: 'private', first_name: 'Bob'},
 			date: 42,
+			text: 'unrelated',
 			reply_to_message: {
 				message_id: 43,
 				from: {id: 42, first_name: 'Bob', is_bot: true},
@@ -309,6 +313,7 @@ test('correctly works with text message', async t => {
 			from: {id: 42, first_name: 'Bob', is_bot: true},
 			chat: {id: 42, type: 'private', first_name: 'Bob'},
 			date: 42,
+			text: 'the answer',
 			reply_to_message: {
 				message_id: 43,
 				from: {id: 42, first_name: 'Bob', is_bot: true},
@@ -346,6 +351,7 @@ test('correctly works with text message with additional state', async t => {
 			from: {id: 42, first_name: 'Bob', is_bot: true},
 			chat: {id: 42, type: 'private', first_name: 'Bob'},
 			date: 42,
+			text: 'the answer',
 			reply_to_message: {
 				message_id: 43,
 				from: {id: 42, first_name: 'Bob', is_bot: true},
@@ -382,6 +388,7 @@ test('correctly works with media message', async t => {
 			from: {id: 42, first_name: 'Bob', is_bot: true},
 			chat: {id: 42, type: 'private', first_name: 'Bob'},
 			date: 42,
+			text: 'the answer',
 			reply_to_message: {
 				message_id: 43,
 				from: {id: 42, first_name: 'Bob', is_bot: true},
