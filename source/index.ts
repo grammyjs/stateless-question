@@ -51,6 +51,5 @@ export default class TelegrafStatelessQuestion<Context extends TelegrafContext> 
 }
 
 // For CommonJS default export support
-/* eslint @typescript-eslint/no-unsafe-member-access: off */
 module.exports = TelegrafStatelessQuestion
 module.exports.default = TelegrafStatelessQuestion
