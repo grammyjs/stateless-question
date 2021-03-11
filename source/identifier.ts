@@ -1,14 +1,17 @@
-import {Context as TelegrafContext} from 'telegraf'
+import {Context as TelegrafContext, NarrowedContext} from 'telegraf'
 import {markdown, markdownv2, html} from 'telegram-format'
-import {MessageEntity, Message} from 'typegram'
+import {MessageEntity, Message, Update} from 'typegram'
 
 const URL_TEXT = '\u200C'
 const BASE_URL = 'http://t.me/#'
 const URL_SEPERATOR = '#'
 
-// TODO: refactor when GuardedContext (or whatever its named) is out (see https://github.com/telegraf/telegraf/discussions/1284)
+// ReplyMessage from typegram is not exported
 type ReplyToMessage = NonNullable<Message.CommonMessage['reply_to_message']>
-export type ReplyToMessageContext<Context extends TelegrafContext> = Context & {message: Message.CommonMessage & {reply_to_message: ReplyToMessage}}
+
+type MessageUpdateContext<Context extends TelegrafContext> = NarrowedContext<Context, Update.MessageUpdate>
+export type ReplyToMessageContext<Context extends TelegrafContext> = MessageUpdateContext<Context> & {message: MessageUpdateContext<Context>['message'] & {reply_to_message: ReplyToMessage}}
+
 export type UrlMessageEntity = Readonly<MessageEntity.TextLinkMessageEntity>
 
 export function isContextReplyToMessage<Context extends TelegrafContext>(context: Context): context is ReplyToMessageContext<Context> {
