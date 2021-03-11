@@ -82,3 +82,24 @@ bot.command('superman', async ctx => {
 	return locationQuestion.replyWithMarkdown(ctx, 'Where is superman?', 'superman')
 })
 ```
+
+### `selective` `ForceReply`
+
+When using in groups in might be nice to only request a reply from the user starting the question.
+Telegram provides `selected` as an option for the [ForceReply](https://core.telegram.org/bots/api#forcereply).
+
+In order to make `selected` work you need to reply to a message (`reply_to_message_id`) or need to mention the user(s) which should reply to this.
+
+```ts
+await ctx.replyWithHTML(
+	'What are unicorns doing?' + unicornQuestion.messageSuffixHTML(),
+	{
+		parse_mode: 'HTML',
+		reply_to_message_id: ctx.message.message_id,
+		reply_markup: {
+			force_reply: true,
+			selective: true
+		}
+	}
+)
+```
