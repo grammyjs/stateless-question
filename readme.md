@@ -103,3 +103,28 @@ await ctx.replyWithHTML(
 	}
 )
 ```
+
+## Known Issues
+
+### The ForceReply question is always shown in some Telegram Clients even long after the question has already answered
+
+see [#4](https://github.com/EdJoPaTo/telegraf-stateless-question/issues/4)
+
+As of the design choices Telegram made to create ForceReply its hard for a Telegram Client to know if a question is still relevant or not.
+As a workaround we can send [ReplyKeyboardRemove](https://core.telegram.org/bots/api#replykeyboardremove) as `reply_markup` with messages that do not require any other `reply_markup` (only one is possible for a message).
+
+```ts
+const unicornQuestion = new TelegrafStatelessQuestion('unicorns', async ctx => {
+	console.log('User thinks unicorns are doing:', ctx.message)
+	await ctx.reply('if you think so...', {reply_markup: {remove_keyboard: true}})
+})
+```
+
+### Sending an abort/back (inline) button with the question message
+
+see [#1](https://github.com/EdJoPaTo/telegraf-stateless-question/issues/1)
+
+Telegram only allows only one `reply_markup` at a time.
+As this library relies on replies to a message [ForceReply](https://core.telegram.org/bots/api#forcereply) is already used as the `reply_markup`.
+In order to send an (inline) button with the same message it would require an (inline) keyboard markup.
+That would be a second `reply_markup` which Telegram sadly does not support.
