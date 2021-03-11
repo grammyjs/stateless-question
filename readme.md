@@ -124,7 +124,7 @@ const unicornQuestion = new TelegrafStatelessQuestion('unicorns', async ctx => {
 
 see [#1](https://github.com/EdJoPaTo/telegraf-stateless-question/issues/1)
 
-Telegram only allows only one `reply_markup` at a time.
+Telegram allows only one `reply_markup` at a time.
 As this library relies on replies to a message [ForceReply](https://core.telegram.org/bots/api#forcereply) is already used as the `reply_markup`.
 In order to send an (inline) button with the same message it would require an (inline) keyboard markup.
 That would be a second `reply_markup` which Telegram sadly does not support.
