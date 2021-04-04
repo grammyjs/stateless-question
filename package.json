@@ -52,17 +52,6 @@
 	"types": "dist/source",
 	"nyc": {
 		"all": true,
-		"extension": [
-			".ts"
-		],
-		"include": [
-			"dist/source",
-			"source"
-		],
-		"exclude": [
-			"**/*.d.ts",
-			"**/*.test.ts"
-		],
 		"reporter": [
 			"lcov",
 			"text"
