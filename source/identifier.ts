@@ -33,11 +33,12 @@ export function isReplyToQuestion<Context extends TelegrafContext>(context: Repl
 export function getAdditionalState<Context extends TelegrafContext>(context: ReplyToMessageContext<Context>, identifier: string): string {
 	const relevantEntity = getRelevantEntity(context)!
 	const expectedUrl = url(identifier, undefined)
-	return relevantEntity.url.slice(expectedUrl.length)
+	const part = relevantEntity.url.slice(expectedUrl.length)
+	return decodeURI(part)
 }
 
 function url(identifier: string, additionalState: string | undefined): string {
-	return BASE_URL + identifier + URL_SEPERATOR + (additionalState ?? '')
+	return encodeURI(BASE_URL + identifier + URL_SEPERATOR + (additionalState ?? ''))
 }
 
 export function suffixMarkdown(identifier: string, additionalState: string | undefined): string {

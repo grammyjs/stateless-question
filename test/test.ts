@@ -20,6 +20,10 @@ test('messageSuffixMarkdown with additional state', t => {
 	t.is(suffixMarkdown('unicorns', 'explode'), '[\u200C](http://t.me/#unicorns#explode)')
 })
 
+test('messageSuffixMarkdown additional state gets url encoded correctly', t => {
+	t.is(suffixMarkdown('unicorns', 'foo bar'), '[\u200C](http://t.me/#unicorns#foo%20bar)')
+})
+
 test('messageSuffixMarkdownV2', t => {
 	t.is(suffixMarkdownV2('unicorns', undefined), '[\u200C](http://t.me/#unicorns#)')
 })
@@ -28,12 +32,20 @@ test('messageSuffixMarkdownV2 with additional state', t => {
 	t.is(suffixMarkdownV2('unicorns', 'explode'), '[\u200C](http://t.me/#unicorns#explode)')
 })
 
+test('messageSuffixMarkdownV2 additional state gets url encoded correctly', t => {
+	t.is(suffixMarkdownV2('unicorns', 'foo bar'), '[\u200C](http://t.me/#unicorns#foo%20bar)')
+})
+
 test('messageSuffixHTML', t => {
 	t.is(suffixHTML('unicorns', undefined), '<a href="http://t.me/#unicorns#">\u200C</a>')
 })
 
 test('messageSuffixHTML with additional state', t => {
 	t.is(suffixHTML('unicorns', 'explode'), '<a href="http://t.me/#unicorns#explode">\u200C</a>')
+})
+
+test('messageSuffixHTML additional state gets url encoded correctly', t => {
+	t.is(suffixHTML('unicorns', 'foo bar'), '<a href="http://t.me/#unicorns#foo%20bar">\u200C</a>')
 })
 
 test('can replyWithMarkdown the question correctly', async t => {
@@ -361,6 +373,44 @@ test('correctly works with text message with additional state', async t => {
 				entities: [{
 					type: 'text_link',
 					url: 'http://t.me/#unicorns#explode',
+					offset: 0,
+					length: 2
+				}]
+			} as any
+		}
+	})
+})
+
+test('additional state url encoding is removed before passed to function', async t => {
+	const bot = new Telegraf('')
+	bot.botInfo = {} as any
+	const question = new TelegrafStatelessQuestion('unicorns', (ctx, additionalState) => {
+		t.is(ctx.message.message_id, 42)
+		t.is(ctx.message.reply_to_message.message_id, 43)
+		t.is(additionalState, 'foo bar')
+	})
+	bot.use(question.middleware())
+	bot.use(() => {
+		t.fail()
+	})
+
+	await bot.handleUpdate({
+		update_id: 42,
+		message: {
+			message_id: 42,
+			from: {id: 42, first_name: 'Bob', is_bot: true},
+			chat: {id: 42, type: 'private', first_name: 'Bob'},
+			date: 42,
+			text: 'the answer',
+			reply_to_message: {
+				message_id: 43,
+				from: {id: 42, first_name: 'Bob', is_bot: true},
+				chat: {id: 42, type: 'private', first_name: 'Bob'},
+				date: 10,
+				text: 'whatever',
+				entities: [{
+					type: 'text_link',
+					url: 'http://t.me/#unicorns#foo%20bar',
 					offset: 0,
 					length: 2
 				}]
