@@ -1,5 +1,5 @@
 import test from 'ava'
-import {Telegraf} from 'telegraf'
+import {Telegraf, Context as TelegrafContext} from 'telegraf'
 
 import {suffixHTML, suffixMarkdown, suffixMarkdownV2} from '../source/identifier'
 import TelegrafStatelessQuestion from '../source'
@@ -309,9 +309,13 @@ test('ignores message replying to another question', async t => {
 test('correctly works with text message', async t => {
 	const bot = new Telegraf('')
 	bot.botInfo = {} as any
-	const question = new TelegrafStatelessQuestion('unicorns', ctx => {
+	const question = new TelegrafStatelessQuestion<TelegrafContext>('unicorns', ctx => {
+		if (!ctx.message || !('reply_to_message' in ctx.message)) {
+			throw new Error('incorrect type')
+		}
+
 		t.is(ctx.message.message_id, 42)
-		t.is(ctx.message.reply_to_message.message_id, 43)
+		t.is(ctx.message.reply_to_message?.message_id, 43)
 	})
 	bot.use(question.middleware())
 	bot.use(() => {
@@ -346,9 +350,13 @@ test('correctly works with text message', async t => {
 test('correctly works with text message with additional state', async t => {
 	const bot = new Telegraf('')
 	bot.botInfo = {} as any
-	const question = new TelegrafStatelessQuestion('unicorns', (ctx, additionalState) => {
+	const question = new TelegrafStatelessQuestion<TelegrafContext>('unicorns', (ctx, additionalState) => {
+		if (!ctx.message || !('reply_to_message' in ctx.message)) {
+			throw new Error('incorrect type')
+		}
+
 		t.is(ctx.message.message_id, 42)
-		t.is(ctx.message.reply_to_message.message_id, 43)
+		t.is(ctx.message.reply_to_message?.message_id, 43)
 		t.is(additionalState, 'explode')
 	})
 	bot.use(question.middleware())
@@ -384,9 +392,13 @@ test('correctly works with text message with additional state', async t => {
 test('additional state url encoding is removed before passed to function', async t => {
 	const bot = new Telegraf('')
 	bot.botInfo = {} as any
-	const question = new TelegrafStatelessQuestion('unicorns', (ctx, additionalState) => {
+	const question = new TelegrafStatelessQuestion<TelegrafContext>('unicorns', (ctx, additionalState) => {
+		if (!ctx.message || !('reply_to_message' in ctx.message)) {
+			throw new Error('incorrect type')
+		}
+
 		t.is(ctx.message.message_id, 42)
-		t.is(ctx.message.reply_to_message.message_id, 43)
+		t.is(ctx.message.reply_to_message?.message_id, 43)
 		t.is(additionalState, 'foo bar')
 	})
 	bot.use(question.middleware())
@@ -422,9 +434,13 @@ test('additional state url encoding is removed before passed to function', async
 test('correctly works with media message', async t => {
 	const bot = new Telegraf('')
 	bot.botInfo = {} as any
-	const question = new TelegrafStatelessQuestion('unicorns', ctx => {
+	const question = new TelegrafStatelessQuestion<TelegrafContext>('unicorns', ctx => {
+		if (!ctx.message || !('reply_to_message' in ctx.message)) {
+			throw new Error('incorrect type')
+		}
+
 		t.is(ctx.message.message_id, 42)
-		t.is(ctx.message.reply_to_message.message_id, 43)
+		t.is(ctx.message.reply_to_message?.message_id, 43)
 	})
 	bot.use(question.middleware())
 	bot.use(() => {
