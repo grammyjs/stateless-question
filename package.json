@@ -70,8 +70,8 @@
 					"test/**/*.*"
 				],
 				"rules": {
-					"@typescript-eslint/no-unsafe-argument": "off",
 					"@typescript-eslint/no-unsafe-assignment": "off",
+					"@typescript-eslint/no-unsafe-member-access": "off",
 					"@typescript-eslint/prefer-readonly-parameter-types": "off"
 				}
 			}

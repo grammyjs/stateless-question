@@ -53,23 +53,27 @@ test('can replyWithMarkdown the question correctly', async t => {
 		t.fail()
 	})
 
-	const bot = new Telegraf('')
-	bot.botInfo = {} as any
-	bot.context.reply = async (text, extra) => {
-		t.is(text, 'banana' + question.messageSuffixMarkdown())
-		t.deepEqual(extra, {
-			parse_mode: 'Markdown',
-			reply_markup: {force_reply: true},
-		})
+	const bot = new Telegraf('123:ABC');
+	(bot as any).botInfo = {}
+	bot.use(async (ctx, next) => {
+		ctx.reply = async (text, extra) => {
+			t.is(text, 'banana' + question.messageSuffixMarkdown())
+			t.deepEqual(extra, {
+				parse_mode: 'Markdown',
+				reply_markup: {force_reply: true},
+			})
 
-		return {
-			message_id: 42,
-			date: 42,
-			from: {id: 42, first_name: 'Bob', is_bot: true},
-			chat: {id: 42, type: 'private', first_name: 'Bob'},
-			text: '666',
+			return {
+				message_id: 42,
+				date: 42,
+				from: {id: 42, first_name: 'Bob', is_bot: true},
+				chat: {id: 42, type: 'private', first_name: 'Bob'},
+				text: '666',
+			}
 		}
-	}
+
+		return next()
+	})
 
 	bot.use(async ctx => question.replyWithMarkdown(ctx, 'banana'))
 	await bot.handleUpdate({
@@ -82,23 +86,27 @@ test('can replyWithMarkdownV2 the question correctly', async t => {
 		t.fail()
 	})
 
-	const bot = new Telegraf('')
-	bot.botInfo = {} as any
-	bot.context.reply = async (text, extra) => {
-		t.is(text, 'banana' + question.messageSuffixMarkdown())
-		t.deepEqual(extra, {
-			parse_mode: 'MarkdownV2',
-			reply_markup: {force_reply: true},
-		})
+	const bot = new Telegraf('123:ABC');
+	(bot as any).botInfo = {}
+	bot.use(async (ctx, next) => {
+		ctx.reply = async (text, extra) => {
+			t.is(text, 'banana' + question.messageSuffixMarkdown())
+			t.deepEqual(extra, {
+				parse_mode: 'MarkdownV2',
+				reply_markup: {force_reply: true},
+			})
 
-		return {
-			message_id: 42,
-			date: 42,
-			from: {id: 42, first_name: 'Bob', is_bot: true},
-			chat: {id: 42, type: 'private', first_name: 'Bob'},
-			text: '666',
+			return {
+				message_id: 42,
+				date: 42,
+				from: {id: 42, first_name: 'Bob', is_bot: true},
+				chat: {id: 42, type: 'private', first_name: 'Bob'},
+				text: '666',
+			}
 		}
-	}
+
+		return next()
+	})
 
 	bot.use(async ctx => question.replyWithMarkdownV2(ctx, 'banana'))
 	await bot.handleUpdate({
@@ -111,23 +119,27 @@ test('can replyWithHTML the question correctly', async t => {
 		t.fail()
 	})
 
-	const bot = new Telegraf('')
-	bot.botInfo = {} as any
-	bot.context.reply = async (text, extra) => {
-		t.is(text, 'banana' + question.messageSuffixHTML())
-		t.deepEqual(extra, {
-			parse_mode: 'HTML',
-			reply_markup: {force_reply: true},
-		})
+	const bot = new Telegraf('123:ABC');
+	(bot as any).botInfo = {}
+	bot.use(async (ctx, next) => {
+		ctx.reply = async (text, extra) => {
+			t.is(text, 'banana' + question.messageSuffixHTML())
+			t.deepEqual(extra, {
+				parse_mode: 'HTML',
+				reply_markup: {force_reply: true},
+			})
 
-		return {
-			message_id: 42,
-			date: 42,
-			from: {id: 42, first_name: 'Bob', is_bot: true},
-			chat: {id: 42, type: 'private', first_name: 'Bob'},
-			text: '666',
+			return {
+				message_id: 42,
+				date: 42,
+				from: {id: 42, first_name: 'Bob', is_bot: true},
+				chat: {id: 42, type: 'private', first_name: 'Bob'},
+				text: '666',
+			}
 		}
-	}
+
+		return next()
+	})
 
 	bot.use(async ctx => question.replyWithHTML(ctx, 'banana'))
 	await bot.handleUpdate({
@@ -136,8 +148,8 @@ test('can replyWithHTML the question correctly', async t => {
 })
 
 test('ignores different update', async t => {
-	const bot = new Telegraf('')
-	bot.botInfo = {} as any
+	const bot = new Telegraf('123:ABC');
+	(bot as any).botInfo = {}
 	const question = new StatelessQuestion('unicorns', () => {
 		t.fail()
 	})
@@ -158,8 +170,8 @@ test('ignores different update', async t => {
 })
 
 test('ignores different message', async t => {
-	const bot = new Telegraf('')
-	bot.botInfo = {} as any
+	const bot = new Telegraf('123:ABC');
+	(bot as any).botInfo = {}
 	const question = new StatelessQuestion('unicorns', () => {
 		t.fail()
 	})
@@ -181,8 +193,8 @@ test('ignores different message', async t => {
 })
 
 test('ignores message replying to something else', async t => {
-	const bot = new Telegraf('')
-	bot.botInfo = {} as any
+	const bot = new Telegraf('123:ABC');
+	(bot as any).botInfo = {}
 	const question = new StatelessQuestion('unicorns', () => {
 		t.fail()
 	})
@@ -211,8 +223,8 @@ test('ignores message replying to something else', async t => {
 })
 
 test('ignores message replying to something else with entities', async t => {
-	const bot = new Telegraf('')
-	bot.botInfo = {} as any
+	const bot = new Telegraf('123:ABC');
+	(bot as any).botInfo = {}
 	const question = new StatelessQuestion('unicorns', () => {
 		t.fail()
 	})
@@ -247,8 +259,8 @@ test('ignores message replying to something else with entities', async t => {
 })
 
 test('ignores message replying to another question', async t => {
-	const bot = new Telegraf('')
-	bot.botInfo = {} as any
+	const bot = new Telegraf('123:ABC');
+	(bot as any).botInfo = {}
 	const question = new StatelessQuestion('unicorns', () => {
 		t.fail()
 	})
@@ -283,8 +295,8 @@ test('ignores message replying to another question', async t => {
 })
 
 test('correctly works with text message', async t => {
-	const bot = new Telegraf('')
-	bot.botInfo = {} as any
+	const bot = new Telegraf('123:ABC');
+	(bot as any).botInfo = {}
 	const question = new StatelessQuestion('unicorns', ctx => {
 		t.is(ctx.message.message_id, 42)
 		t.is(ctx.message.reply_to_message.message_id, 43)
@@ -320,8 +332,8 @@ test('correctly works with text message', async t => {
 })
 
 test('correctly works with text message with additional state', async t => {
-	const bot = new Telegraf('')
-	bot.botInfo = {} as any
+	const bot = new Telegraf('123:ABC');
+	(bot as any).botInfo = {}
 	const question = new StatelessQuestion('unicorns', (ctx, additionalState) => {
 		t.is(ctx.message.message_id, 42)
 		t.is(ctx.message.reply_to_message.message_id, 43)
@@ -358,8 +370,8 @@ test('correctly works with text message with additional state', async t => {
 })
 
 test('additional state url encoding is removed before passed to function', async t => {
-	const bot = new Telegraf('')
-	bot.botInfo = {} as any
+	const bot = new Telegraf('123:ABC');
+	(bot as any).botInfo = {}
 	const question = new StatelessQuestion('unicorns', (ctx, additionalState) => {
 		t.is(ctx.message.message_id, 42)
 		t.is(ctx.message.reply_to_message.message_id, 43)
@@ -396,8 +408,8 @@ test('additional state url encoding is removed before passed to function', async
 })
 
 test('correctly works with media message', async t => {
-	const bot = new Telegraf('')
-	bot.botInfo = {} as any
+	const bot = new Telegraf('123:ABC');
+	(bot as any).botInfo = {}
 	const question = new StatelessQuestion('unicorns', ctx => {
 		t.is(ctx.message.message_id, 42)
 		t.is(ctx.message.reply_to_message.message_id, 43)
