@@ -5,7 +5,7 @@ import {suffixHTML, suffixMarkdown, suffixMarkdownV2, isContextReplyToMessage, i
 
 type ConstOrPromise<T> = T | Promise<T>
 
-export default class TelegrafStatelessQuestion<Context extends BaseContext> {
+export class StatelessQuestion<Context extends BaseContext> {
 	constructor(
 		public readonly uniqueIdentifier: string,
 		private readonly answer: (context: ReplyToMessageContext<Context>, additionalState: string) => ConstOrPromise<void>,
@@ -49,9 +49,3 @@ export default class TelegrafStatelessQuestion<Context extends BaseContext> {
 		return context.reply(textResult, {reply_markup: {force_reply: true}, parse_mode: 'MarkdownV2'})
 	}
 }
-
-// For CommonJS default export support
-/* eslint-disable unicorn/prefer-module, @typescript-eslint/no-unsafe-member-access */
-module.exports = TelegrafStatelessQuestion
-module.exports.default = TelegrafStatelessQuestion
-/* eslint-enable */

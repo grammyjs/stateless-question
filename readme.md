@@ -31,12 +31,12 @@ $ npm install telegraf telegraf-stateless-question
 
 ## Usage
 
-```js
-const TelegrafStatelessQuestion = require('telegraf-stateless-question');
+```ts
+import {StatelessQuestion} from 'telegraf-stateless-question';
 
 const bot = new Telegraf(token);
 
-const unicornQuestion = new TelegrafStatelessQuestion('unicorns', ctx => {
+const unicornQuestion = new StatelessQuestion('unicorns', ctx => {
 	console.log('User thinks unicorns are doing:', ctx.message)
 })
 
@@ -66,7 +66,7 @@ For example when you want to know in which room an event is happening you can se
 This also helpful when working with [telegraf-inline-menu](https://github.com/EdJoPaTo/telegraf-inline-menu) to store the path to return the menu to.
 
 ```js
-const locationQuestion = new TelegrafStatelessQuestion('target', (ctx, additionalState) => {
+const locationQuestion = new StatelessQuestion('target', (ctx, additionalState) => {
 	console.log('Location of', additionalState, 'is', ctx.message.text)
 	saveHeroLocation(additionalState, ctx.message.text)
 })
@@ -114,7 +114,7 @@ As of the design choices Telegram made to create ForceReply its hard for a Teleg
 As a workaround we can send [ReplyKeyboardRemove](https://core.telegram.org/bots/api#replykeyboardremove) as `reply_markup` with messages that do not require any other `reply_markup` (only one is possible for a message).
 
 ```ts
-const unicornQuestion = new TelegrafStatelessQuestion('unicorns', async ctx => {
+const unicornQuestion = new StatelessQuestion('unicorns', async ctx => {
 	console.log('User thinks unicorns are doing:', ctx.message)
 	await ctx.reply('if you think so...', {reply_markup: {remove_keyboard: true}})
 })
