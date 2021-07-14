@@ -55,14 +55,6 @@ test('can replyWithMarkdown the question correctly', async t => {
 
 	const bot = new Telegraf('')
 	bot.botInfo = {} as any
-	bot.context.replyWithHTML = () => {
-		throw new Error('expect reply')
-	}
-
-	bot.context.replyWithMarkdown = () => {
-		throw new Error('expect reply')
-	}
-
 	bot.context.reply = async (text, extra) => {
 		t.is(text, 'banana' + question.messageSuffixMarkdown())
 		t.deepEqual(extra, {
@@ -92,14 +84,6 @@ test('can replyWithMarkdownV2 the question correctly', async t => {
 
 	const bot = new Telegraf('')
 	bot.botInfo = {} as any
-	bot.context.replyWithHTML = () => {
-		throw new Error('expect reply')
-	}
-
-	bot.context.replyWithMarkdown = () => {
-		throw new Error('expect reply')
-	}
-
 	bot.context.reply = async (text, extra) => {
 		t.is(text, 'banana' + question.messageSuffixMarkdown())
 		t.deepEqual(extra, {
@@ -129,14 +113,6 @@ test('can replyWithHTML the question correctly', async t => {
 
 	const bot = new Telegraf('')
 	bot.botInfo = {} as any
-	bot.context.replyWithHTML = () => {
-		throw new Error('expect reply')
-	}
-
-	bot.context.replyWithMarkdown = () => {
-		throw new Error('expect reply')
-	}
-
 	bot.context.reply = async (text, extra) => {
 		t.is(text, 'banana' + question.messageSuffixHTML())
 		t.deepEqual(extra, {
