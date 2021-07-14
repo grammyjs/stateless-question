@@ -8,7 +8,7 @@ type ConstOrPromise<T> = T | Promise<T>
 export default class TelegrafStatelessQuestion<Context extends TelegrafContext> {
 	constructor(
 		public readonly uniqueIdentifier: string,
-		private readonly answer: (context: ReplyToMessageContext<Context>, additionalState: string) => ConstOrPromise<void>
+		private readonly answer: (context: ReplyToMessageContext<Context>, additionalState: string) => ConstOrPromise<void>,
 	) {}
 
 	middleware(): MiddlewareFn<Context> {

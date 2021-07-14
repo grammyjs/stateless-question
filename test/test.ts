@@ -67,7 +67,7 @@ test('can replyWithMarkdown the question correctly', async t => {
 		t.is(text, 'banana' + question.messageSuffixMarkdown())
 		t.deepEqual(extra, {
 			parse_mode: 'Markdown',
-			reply_markup: {force_reply: true}
+			reply_markup: {force_reply: true},
 		})
 
 		return {
@@ -75,13 +75,13 @@ test('can replyWithMarkdown the question correctly', async t => {
 			date: 42,
 			from: {id: 42, first_name: 'Bob', is_bot: true},
 			chat: {id: 42, type: 'private', first_name: 'Bob'},
-			text: '666'
+			text: '666',
 		}
 	}
 
 	bot.use(async ctx => question.replyWithMarkdown(ctx, 'banana'))
 	await bot.handleUpdate({
-		update_id: 42
+		update_id: 42,
 	} as any)
 })
 
@@ -104,7 +104,7 @@ test('can replyWithMarkdownV2 the question correctly', async t => {
 		t.is(text, 'banana' + question.messageSuffixMarkdown())
 		t.deepEqual(extra, {
 			parse_mode: 'MarkdownV2',
-			reply_markup: {force_reply: true}
+			reply_markup: {force_reply: true},
 		})
 
 		return {
@@ -112,13 +112,13 @@ test('can replyWithMarkdownV2 the question correctly', async t => {
 			date: 42,
 			from: {id: 42, first_name: 'Bob', is_bot: true},
 			chat: {id: 42, type: 'private', first_name: 'Bob'},
-			text: '666'
+			text: '666',
 		}
 	}
 
 	bot.use(async ctx => question.replyWithMarkdownV2(ctx, 'banana'))
 	await bot.handleUpdate({
-		update_id: 42
+		update_id: 42,
 	} as any)
 })
 
@@ -141,7 +141,7 @@ test('can replyWithHTML the question correctly', async t => {
 		t.is(text, 'banana' + question.messageSuffixHTML())
 		t.deepEqual(extra, {
 			parse_mode: 'HTML',
-			reply_markup: {force_reply: true}
+			reply_markup: {force_reply: true},
 		})
 
 		return {
@@ -149,13 +149,13 @@ test('can replyWithHTML the question correctly', async t => {
 			date: 42,
 			from: {id: 42, first_name: 'Bob', is_bot: true},
 			chat: {id: 42, type: 'private', first_name: 'Bob'},
-			text: '666'
+			text: '666',
 		}
 	}
 
 	bot.use(async ctx => question.replyWithHTML(ctx, 'banana'))
 	await bot.handleUpdate({
-		update_id: 42
+		update_id: 42,
 	} as any)
 })
 
@@ -176,8 +176,8 @@ test('ignores different update', async t => {
 			id: '42',
 			from: {id: 42, is_bot: false, first_name: 'Bob'},
 			chat_instance: '42',
-			data: '666'
-		}
+			data: '666',
+		},
 	})
 })
 
@@ -199,8 +199,8 @@ test('ignores different message', async t => {
 			from: {id: 42, first_name: 'Bob', is_bot: true},
 			chat: {id: 42, type: 'private', first_name: 'Bob'},
 			date: 42,
-			text: 'unrelated'
-		}
+			text: 'unrelated',
+		},
 	})
 })
 
@@ -228,9 +228,9 @@ test('ignores message replying to something else', async t => {
 				from: {id: 42, first_name: 'Bob', is_bot: true},
 				chat: {id: 42, type: 'private', first_name: 'Bob'},
 				date: 10,
-				text: 'whatever'
-			} as any
-		}
+				text: 'whatever',
+			} as any,
+		},
 	})
 })
 
@@ -263,10 +263,10 @@ test('ignores message replying to something else with entities', async t => {
 					type: 'text_link',
 					url: 'http://t.me/EdJoPaTo',
 					offset: 0,
-					length: 2
-				}]
-			} as any
-		}
+					length: 2,
+				}],
+			} as any,
+		},
 	})
 })
 
@@ -299,10 +299,10 @@ test('ignores message replying to another question', async t => {
 					type: 'text_link',
 					url: 'http://t.me/#other#',
 					offset: 0,
-					length: 2
-				}]
-			} as any
-		}
+					length: 2,
+				}],
+			} as any,
+		},
 	})
 })
 
@@ -336,10 +336,10 @@ test('correctly works with text message', async t => {
 					type: 'text_link',
 					url: 'http://t.me/#unicorns#',
 					offset: 0,
-					length: 2
-				}]
-			} as any
-		}
+					length: 2,
+				}],
+			} as any,
+		},
 	})
 })
 
@@ -374,10 +374,10 @@ test('correctly works with text message with additional state', async t => {
 					type: 'text_link',
 					url: 'http://t.me/#unicorns#explode',
 					offset: 0,
-					length: 2
-				}]
-			} as any
-		}
+					length: 2,
+				}],
+			} as any,
+		},
 	})
 })
 
@@ -412,10 +412,10 @@ test('additional state url encoding is removed before passed to function', async
 					type: 'text_link',
 					url: 'http://t.me/#unicorns#foo%20bar',
 					offset: 0,
-					length: 2
-				}]
-			} as any
-		}
+					length: 2,
+				}],
+			} as any,
+		},
 	})
 })
 
@@ -450,9 +450,9 @@ test('correctly works with media message', async t => {
 					type: 'text_link',
 					url: 'http://t.me/#unicorns#',
 					offset: 0,
-					length: 2
-				}]
-			} as any
-		}
+					length: 2,
+				}],
+			} as any,
+		},
 	})
 })

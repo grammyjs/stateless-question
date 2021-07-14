@@ -31,7 +31,6 @@ export function isReplyToQuestion<Context extends TelegrafContext>(context: Repl
 }
 
 export function getAdditionalState<Context extends TelegrafContext>(context: ReplyToMessageContext<Context>, identifier: string): string {
-	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 	const relevantEntity = getRelevantEntity(context)!
 	const expectedUrl = url(identifier, undefined)
 	const part = relevantEntity.url.slice(expectedUrl.length)
