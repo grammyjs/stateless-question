@@ -1,5 +1,5 @@
 import test from 'ava'
-import {Telegraf} from 'telegraf'
+import {Bot} from 'grammy'
 
 import {suffixHTML, suffixMarkdown, suffixMarkdownV2} from '../source/identifier'
 import {StatelessQuestion} from '../source'
@@ -53,7 +53,7 @@ test('can replyWithMarkdown the question correctly', async t => {
 		t.fail()
 	})
 
-	const bot = new Telegraf('123:ABC');
+	const bot = new Bot('123:ABC');
 	(bot as any).botInfo = {}
 	bot.use(async (ctx, next) => {
 		ctx.reply = async (text, extra) => {
@@ -86,7 +86,7 @@ test('can replyWithMarkdownV2 the question correctly', async t => {
 		t.fail()
 	})
 
-	const bot = new Telegraf('123:ABC');
+	const bot = new Bot('123:ABC');
 	(bot as any).botInfo = {}
 	bot.use(async (ctx, next) => {
 		ctx.reply = async (text, extra) => {
@@ -119,7 +119,7 @@ test('can replyWithHTML the question correctly', async t => {
 		t.fail()
 	})
 
-	const bot = new Telegraf('123:ABC');
+	const bot = new Bot('123:ABC');
 	(bot as any).botInfo = {}
 	bot.use(async (ctx, next) => {
 		ctx.reply = async (text, extra) => {
@@ -148,7 +148,7 @@ test('can replyWithHTML the question correctly', async t => {
 })
 
 test('ignores different update', async t => {
-	const bot = new Telegraf('123:ABC');
+	const bot = new Bot('123:ABC');
 	(bot as any).botInfo = {}
 	const question = new StatelessQuestion('unicorns', () => {
 		t.fail()
@@ -170,7 +170,7 @@ test('ignores different update', async t => {
 })
 
 test('ignores different message', async t => {
-	const bot = new Telegraf('123:ABC');
+	const bot = new Bot('123:ABC');
 	(bot as any).botInfo = {}
 	const question = new StatelessQuestion('unicorns', () => {
 		t.fail()
@@ -193,7 +193,7 @@ test('ignores different message', async t => {
 })
 
 test('ignores message replying to something else', async t => {
-	const bot = new Telegraf('123:ABC');
+	const bot = new Bot('123:ABC');
 	(bot as any).botInfo = {}
 	const question = new StatelessQuestion('unicorns', () => {
 		t.fail()
@@ -223,7 +223,7 @@ test('ignores message replying to something else', async t => {
 })
 
 test('ignores message replying to something else with entities', async t => {
-	const bot = new Telegraf('123:ABC');
+	const bot = new Bot('123:ABC');
 	(bot as any).botInfo = {}
 	const question = new StatelessQuestion('unicorns', () => {
 		t.fail()
@@ -259,7 +259,7 @@ test('ignores message replying to something else with entities', async t => {
 })
 
 test('ignores message replying to another question', async t => {
-	const bot = new Telegraf('123:ABC');
+	const bot = new Bot('123:ABC');
 	(bot as any).botInfo = {}
 	const question = new StatelessQuestion('unicorns', () => {
 		t.fail()
@@ -295,7 +295,7 @@ test('ignores message replying to another question', async t => {
 })
 
 test('correctly works with text message', async t => {
-	const bot = new Telegraf('123:ABC');
+	const bot = new Bot('123:ABC');
 	(bot as any).botInfo = {}
 	const question = new StatelessQuestion('unicorns', ctx => {
 		t.is(ctx.message.message_id, 42)
@@ -332,7 +332,7 @@ test('correctly works with text message', async t => {
 })
 
 test('correctly works with text message with additional state', async t => {
-	const bot = new Telegraf('123:ABC');
+	const bot = new Bot('123:ABC');
 	(bot as any).botInfo = {}
 	const question = new StatelessQuestion('unicorns', (ctx, additionalState) => {
 		t.is(ctx.message.message_id, 42)
@@ -370,7 +370,7 @@ test('correctly works with text message with additional state', async t => {
 })
 
 test('additional state url encoding is removed before passed to function', async t => {
-	const bot = new Telegraf('123:ABC');
+	const bot = new Bot('123:ABC');
 	(bot as any).botInfo = {}
 	const question = new StatelessQuestion('unicorns', (ctx, additionalState) => {
 		t.is(ctx.message.message_id, 42)
@@ -408,7 +408,7 @@ test('additional state url encoding is removed before passed to function', async
 })
 
 test('correctly works with media message', async t => {
-	const bot = new Telegraf('123:ABC');
+	const bot = new Bot('123:ABC');
 	(bot as any).botInfo = {}
 	const question = new StatelessQuestion('unicorns', ctx => {
 		t.is(ctx.message.message_id, 42)

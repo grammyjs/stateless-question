@@ -1,6 +1,6 @@
-import {Context as BaseContext} from 'telegraf'
+import {Context as BaseContext} from 'grammy'
 import {markdown, markdownv2, html} from 'telegram-format'
-import {MessageEntity, Message} from 'typegram'
+import {Message, MessageEntity} from 'grammy/out/platform'
 
 const URL_TEXT = '\u200C'
 const BASE_URL = 'http://t.me/#'

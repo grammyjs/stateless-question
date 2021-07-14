@@ -1,5 +1,5 @@
-import {Context as BaseContext} from 'telegraf'
-import {Message} from 'typegram'
+import {Context as BaseContext} from 'grammy'
+import {Message} from 'grammy/out/platform'
 
 import {suffixHTML, suffixMarkdown, suffixMarkdownV2, isContextReplyToMessage, isReplyToQuestion, ReplyToMessageContext, getAdditionalState} from './identifier'
 

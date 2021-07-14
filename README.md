@@ -19,16 +19,16 @@ Special thanks to [@Ramin-Bateni](https://github.com/Ramin-Bateni) and take a lo
 ## Install
 
 ```
-$ npm install telegraf telegraf-stateless-question
+$ npm install grammy @grammyjs/stateless-question
 ```
 
 
 ## Usage
 
 ```ts
-import {StatelessQuestion} from 'telegraf-stateless-question';
+import {StatelessQuestion} from '@grammyjs/stateless-question';
 
-const bot = new Telegraf(token);
+const bot = new Bot(token);
 
 const unicornQuestion = new StatelessQuestion('unicorns', ctx => {
 	console.log('User thinks unicorns are doing:', ctx.message)
