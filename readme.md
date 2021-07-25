@@ -1,10 +1,4 @@
-# telegraf-stateless-question
-
-[![NPM Version](https://img.shields.io/npm/v/telegraf-stateless-question.svg)](https://www.npmjs.com/package/telegraf-stateless-question)
-[![node](https://img.shields.io/node/v/telegraf-stateless-question.svg)](https://www.npmjs.com/package/telegraf-stateless-question)
-[![Dependency Status](https://david-dm.org/EdJoPaTo/telegraf-stateless-question/status.svg)](https://david-dm.org/EdJoPaTo/telegraf-stateless-question)
-[![Peer Dependency Status](https://david-dm.org/EdJoPaTo/telegraf-stateless-question/peer-status.svg)](https://david-dm.org/EdJoPaTo/telegraf-stateless-question?type=peer)
-[![Dev Dependency Status](https://david-dm.org/EdJoPaTo/telegraf-stateless-question/dev-status.svg)](https://david-dm.org/EdJoPaTo/telegraf-stateless-question?type=dev)
+# Stateless Question
 
 > Create stateless questions to Telegram users working in privacy mode
 

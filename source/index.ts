@@ -1,4 +1,4 @@
-import {Context as BaseContext, MiddlewareFn} from 'telegraf'
+import {Context as BaseContext} from 'telegraf'
 import {Message} from 'typegram'
 
 import {suffixHTML, suffixMarkdown, suffixMarkdownV2, isContextReplyToMessage, isReplyToQuestion, ReplyToMessageContext, getAdditionalState} from './identifier'
@@ -11,7 +11,7 @@ export class StatelessQuestion<Context extends BaseContext> {
 		private readonly answer: (context: ReplyToMessageContext<Context>, additionalState: string) => ConstOrPromise<void>,
 	) {}
 
-	middleware(): MiddlewareFn<Context> {
+	middleware(): (context: Context, next: () => Promise<void>) => Promise<void> {
 		return async (context, next) => {
 			if (isContextReplyToMessage(context) && isReplyToQuestion(context, this.uniqueIdentifier)) {
 				const additionalState = getAdditionalState(context, this.uniqueIdentifier)

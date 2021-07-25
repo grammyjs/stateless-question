@@ -15,7 +15,7 @@
 	"repository": "EdJoPaTo/telegraf-stateless-question",
 	"author": {
 		"name": "EdJoPaTo",
-		"email": "telegraf-npm-package@edjopato.de",
+		"email": "stateless-question-telegram-typescript@edjopato.de",
 		"url": "https://edjopato.de"
 	},
 	"scripts": {
