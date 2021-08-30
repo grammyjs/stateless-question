@@ -34,7 +34,7 @@
 		"telegraf": "^4.0.0"
 	},
 	"devDependencies": {
-		"@sindresorhus/tsconfig": "^1.0.1",
+		"@sindresorhus/tsconfig": "^2.0.0",
 		"@types/node": "^16.0.0",
 		"ava": "^3.0.0",
 		"del-cli": "^4.0.0",
