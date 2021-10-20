@@ -1,6 +1,6 @@
 {
 	"name": "@grammyjs/stateless-question",
-	"version": "3.0.0",
+	"version": "3.0.1",
 	"description": "Create stateless questions to Telegram users working in privacy mode",
 	"keywords": [
 		"grammy",
