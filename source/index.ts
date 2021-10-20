@@ -1,5 +1,4 @@
 import {Context as BaseContext} from 'grammy'
-import {Message} from 'grammy/out/platform'
 
 import {suffixHTML, suffixMarkdown, suffixMarkdownV2, isContextReplyToMessage, isReplyToQuestion, ReplyToMessageContext, getAdditionalState} from './identifier'
 
@@ -34,17 +33,17 @@ export class StatelessQuestion<Context extends BaseContext> {
 		return suffixMarkdownV2(this.uniqueIdentifier, additionalState)
 	}
 
-	async replyWithHTML(context: BaseContext, text: string, additionalState?: string): Promise<Message> {
+	async replyWithHTML(context: BaseContext, text: string, additionalState?: string) {
 		const textResult = text + this.messageSuffixHTML(additionalState)
 		return context.reply(textResult, {reply_markup: {force_reply: true}, parse_mode: 'HTML'})
 	}
 
-	async replyWithMarkdown(context: BaseContext, text: string, additionalState?: string): Promise<Message> {
+	async replyWithMarkdown(context: BaseContext, text: string, additionalState?: string) {
 		const textResult = text + this.messageSuffixMarkdown(additionalState)
 		return context.reply(textResult, {reply_markup: {force_reply: true}, parse_mode: 'Markdown'})
 	}
 
-	async replyWithMarkdownV2(context: BaseContext, text: string, additionalState?: string): Promise<Message> {
+	async replyWithMarkdownV2(context: BaseContext, text: string, additionalState?: string) {
 		const textResult = text + this.messageSuffixMarkdownV2(additionalState)
 		return context.reply(textResult, {reply_markup: {force_reply: true}, parse_mode: 'MarkdownV2'})
 	}
