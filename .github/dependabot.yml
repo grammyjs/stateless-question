@@ -15,3 +15,7 @@ updates:
     ignore:
       - dependency-name: "@types/node"
         update-types: ["version-update:semver-major"]
+      # Requires Node.js 14 or later
+      - dependency-name: "@sindresorhus/tsconfig"
+        update-types: ["version-update:semver-major"]
+
