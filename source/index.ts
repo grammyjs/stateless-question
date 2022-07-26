@@ -1,6 +1,6 @@
 import {Context as BaseContext} from 'grammy'
 
-import {suffixHTML, suffixMarkdown, suffixMarkdownV2, isContextReplyToMessage, isReplyToQuestion, ReplyToMessageContext, getAdditionalState} from './identifier'
+import {suffixHTML, suffixMarkdown, suffixMarkdownV2, isContextReplyToMessage, isReplyToQuestion, ReplyToMessageContext, getAdditionalState} from './identifier.js'
 
 type ConstOrPromise<T> = T | Promise<T>
 

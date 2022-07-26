@@ -1,8 +1,8 @@
 import test from 'ava'
 import {Bot} from 'grammy'
 
-import {suffixHTML, suffixMarkdown, suffixMarkdownV2} from '../source/identifier'
-import {StatelessQuestion} from '../source'
+import {suffixHTML, suffixMarkdown, suffixMarkdownV2} from '../source/identifier.js'
+import {StatelessQuestion} from '../source/index.js'
 
 test('uniqueIdentifier keeps the same', t => {
 	const question = new StatelessQuestion('unicorns', () => {
