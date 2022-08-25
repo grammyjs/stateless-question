@@ -60,7 +60,7 @@
 		"access": "public"
 	},
 	"xo": {
-		"semicolon": false,
+		"space": 2,
 		"rules": {
 			"@typescript-eslint/naming-convention": "off",
 			"@typescript-eslint/prefer-readonly-parameter-types": "off",
