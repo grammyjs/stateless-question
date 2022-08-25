@@ -31,7 +31,7 @@
 		"telegram-format": "^2.0.0"
 	},
 	"peerDependencies": {
-		"grammy": "^1.2.0"
+		"grammy": "^1.10.1"
 	},
 	"devDependencies": {
 		"@sindresorhus/tsconfig": "^3.0.1",
