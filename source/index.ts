@@ -1,10 +1,10 @@
-import {Context as BaseContext} from 'grammy';
+import {type Context as BaseContext} from 'grammy';
 
 import {
   getAdditionalState,
   isContextReplyToMessage,
   isReplyToQuestion,
-  ReplyToMessageContext,
+  type ReplyToMessageContext,
   suffixHTML,
   suffixMarkdown,
   suffixMarkdownV2,
