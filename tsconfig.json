@@ -1,11 +1,11 @@
 {
-	"extends": "@sindresorhus/tsconfig/tsconfig.json",
-	"include": [
-		"source",
-		"test"
-	],
-	"compilerOptions": {
-		"module": "CommonJS",
-		"outDir": "dist"
-	}
+  "extends": "@sindresorhus/tsconfig/tsconfig.json",
+  "include": [
+    "source",
+    "test"
+  ],
+  "compilerOptions": {
+    "module": "CommonJS",
+    "outDir": "dist"
+  }
 }

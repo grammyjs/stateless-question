@@ -1,82 +1,82 @@
 {
-	"name": "@grammyjs/stateless-question",
-	"version": "3.0.1",
-	"description": "Create stateless questions to Telegram users working in privacy mode",
-	"keywords": [
-		"grammy",
-		"stateless",
-		"question",
-		"reply",
-		"privacy",
-		"mode",
-		"message"
-	],
-	"license": "MIT",
-	"repository": "grammyjs/stateless-question",
-	"author": {
-		"name": "EdJoPaTo",
-		"email": "stateless-question-telegram-typescript@edjopato.de",
-		"url": "https://edjopato.de"
-	},
-	"scripts": {
-		"build": "del-cli dist && tsc",
-		"prepack": "npm run build",
-		"test": "tsc --sourceMap && xo && nyc ava"
-	},
-	"type": "commonjs",
-	"engines": {
-		"node": ">=14"
-	},
-	"dependencies": {
-		"telegram-format": "^2.0.0"
-	},
-	"peerDependencies": {
-		"grammy": "^1.10.1"
-	},
-	"devDependencies": {
-		"@sindresorhus/tsconfig": "^3.0.1",
-		"@types/node": "^14.18.22",
-		"ava": "^5.0.1",
-		"del-cli": "^5.0.0",
-		"grammy": "^1.10.1",
-		"nyc": "^15.0.0",
-		"typescript": "^5.0.2",
-		"xo": "^0.54.0"
-	},
-	"files": [
-		"dist/source",
-		"!*.test.*"
-	],
-	"main": "./dist/source/index.js",
-	"types": "./dist/source/index.d.ts",
-	"nyc": {
-		"all": true,
-		"reporter": [
-			"lcov",
-			"text"
-		]
-	},
-	"publishConfig": {
-		"access": "public"
-	},
-	"xo": {
-		"space": 2,
-		"rules": {
-			"@typescript-eslint/naming-convention": "off",
-			"@typescript-eslint/prefer-readonly-parameter-types": "off",
-			"ava/no-ignored-test-files": "off"
-		},
-		"overrides": [
-			{
-				"files": [
-					"**/*.test.*",
-					"test/**/*.*"
-				],
-				"rules": {
-					"@typescript-eslint/no-unsafe-assignment": "off",
-					"@typescript-eslint/prefer-readonly-parameter-types": "off"
-				}
-			}
-		]
-	}
+  "name": "@grammyjs/stateless-question",
+  "version": "3.0.1",
+  "description": "Create stateless questions to Telegram users working in privacy mode",
+  "keywords": [
+    "grammy",
+    "stateless",
+    "question",
+    "reply",
+    "privacy",
+    "mode",
+    "message"
+  ],
+  "license": "MIT",
+  "repository": "grammyjs/stateless-question",
+  "author": {
+    "name": "EdJoPaTo",
+    "email": "stateless-question-telegram-typescript@edjopato.de",
+    "url": "https://edjopato.de"
+  },
+  "scripts": {
+    "build": "del-cli dist && tsc",
+    "prepack": "npm run build",
+    "test": "tsc --sourceMap && xo && nyc ava"
+  },
+  "type": "commonjs",
+  "engines": {
+    "node": ">=14"
+  },
+  "dependencies": {
+    "telegram-format": "^2.0.0"
+  },
+  "peerDependencies": {
+    "grammy": "^1.10.1"
+  },
+  "devDependencies": {
+    "@sindresorhus/tsconfig": "^3.0.1",
+    "@types/node": "^14.18.22",
+    "ava": "^5.0.1",
+    "del-cli": "^5.0.0",
+    "grammy": "^1.10.1",
+    "nyc": "^15.0.0",
+    "typescript": "^5.0.2",
+    "xo": "^0.54.0"
+  },
+  "files": [
+    "dist/source",
+    "!*.test.*"
+  ],
+  "main": "./dist/source/index.js",
+  "types": "./dist/source/index.d.ts",
+  "nyc": {
+    "all": true,
+    "reporter": [
+      "lcov",
+      "text"
+    ]
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "xo": {
+    "space": 2,
+    "rules": {
+      "@typescript-eslint/naming-convention": "off",
+      "@typescript-eslint/prefer-readonly-parameter-types": "off",
+      "ava/no-ignored-test-files": "off"
+    },
+    "overrides": [
+      {
+        "files": [
+          "**/*.test.*",
+          "test/**/*.*"
+        ],
+        "rules": {
+          "@typescript-eslint/no-unsafe-assignment": "off",
+          "@typescript-eslint/prefer-readonly-parameter-types": "off"
+        }
+      }
+    ]
+  }
 }
