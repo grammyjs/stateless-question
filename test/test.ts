@@ -1,6 +1,5 @@
 import test from 'ava';
 import {Bot} from 'grammy';
-
 import {
   suffixHTML,
   suffixMarkdown,
@@ -109,7 +108,7 @@ test('can replyWithMarkdown the question correctly', async t => {
   bot.use(async ctx => question.replyWithMarkdown(ctx, 'banana'));
   await bot.handleUpdate({
     update_id: 42,
-  } as any);
+  });
 });
 
 test('can replyWithMarkdownV2 the question correctly', async t => {
@@ -142,7 +141,7 @@ test('can replyWithMarkdownV2 the question correctly', async t => {
   bot.use(async ctx => question.replyWithMarkdownV2(ctx, 'banana'));
   await bot.handleUpdate({
     update_id: 42,
-  } as any);
+  });
 });
 
 test('can replyWithHTML the question correctly', async t => {
@@ -175,7 +174,7 @@ test('can replyWithHTML the question correctly', async t => {
   bot.use(async ctx => question.replyWithHTML(ctx, 'banana'));
   await bot.handleUpdate({
     update_id: 42,
-  } as any);
+  });
 });
 
 test('ignores different update', async t => {
@@ -242,13 +241,14 @@ test('ignores message replying to something else', async t => {
       chat: {id: 42, type: 'private', first_name: 'Bob'},
       date: 42,
       text: 'unrelated',
+      // @ts-expect-error missing some keys
       reply_to_message: {
         message_id: 43,
         from: {id: 42, first_name: 'Bob', is_bot: true},
         chat: {id: 42, type: 'private', first_name: 'Bob'},
         date: 10,
         text: 'whatever',
-      } as any,
+      },
     },
   });
 });
@@ -272,6 +272,7 @@ test('ignores message replying to something else with entities', async t => {
       chat: {id: 42, type: 'private', first_name: 'Bob'},
       date: 42,
       text: 'unrelated',
+      // @ts-expect-error missing some keys
       reply_to_message: {
         message_id: 43,
         from: {id: 42, first_name: 'Bob', is_bot: true},
@@ -284,7 +285,7 @@ test('ignores message replying to something else with entities', async t => {
           offset: 0,
           length: 2,
         }],
-      } as any,
+      },
     },
   });
 });
@@ -308,6 +309,7 @@ test('ignores message replying to another question', async t => {
       chat: {id: 42, type: 'private', first_name: 'Bob'},
       date: 42,
       text: 'unrelated',
+      // @ts-expect-error missing some keys
       reply_to_message: {
         message_id: 43,
         from: {id: 42, first_name: 'Bob', is_bot: true},
@@ -320,7 +322,7 @@ test('ignores message replying to another question', async t => {
           offset: 0,
           length: 2,
         }],
-      } as any,
+      },
     },
   });
 });
@@ -345,6 +347,7 @@ test('correctly works with text message', async t => {
       chat: {id: 42, type: 'private', first_name: 'Bob'},
       date: 42,
       text: 'the answer',
+      // @ts-expect-error missing some keys
       reply_to_message: {
         message_id: 43,
         from: {id: 42, first_name: 'Bob', is_bot: true},
@@ -357,7 +360,7 @@ test('correctly works with text message', async t => {
           offset: 0,
           length: 2,
         }],
-      } as any,
+      },
     },
   });
 });
@@ -383,6 +386,7 @@ test('correctly works with text message with additional state', async t => {
       chat: {id: 42, type: 'private', first_name: 'Bob'},
       date: 42,
       text: 'the answer',
+      // @ts-expect-error missing some keys
       reply_to_message: {
         message_id: 43,
         from: {id: 42, first_name: 'Bob', is_bot: true},
@@ -395,7 +399,7 @@ test('correctly works with text message with additional state', async t => {
           offset: 0,
           length: 2,
         }],
-      } as any,
+      },
     },
   });
 });
@@ -421,6 +425,7 @@ test('additional state url encoding is removed before passed to function', async
       chat: {id: 42, type: 'private', first_name: 'Bob'},
       date: 42,
       text: 'the answer',
+      // @ts-expect-error missing some keys
       reply_to_message: {
         message_id: 43,
         from: {id: 42, first_name: 'Bob', is_bot: true},
@@ -433,7 +438,7 @@ test('additional state url encoding is removed before passed to function', async
           offset: 0,
           length: 2,
         }],
-      } as any,
+      },
     },
   });
 });
@@ -458,6 +463,7 @@ test('correctly works with media message', async t => {
       chat: {id: 42, type: 'private', first_name: 'Bob'},
       date: 42,
       text: 'the answer',
+      // @ts-expect-error missing some keys
       reply_to_message: {
         message_id: 43,
         from: {id: 42, first_name: 'Bob', is_bot: true},
@@ -471,7 +477,7 @@ test('correctly works with media message', async t => {
           offset: 0,
           length: 2,
         }],
-      } as any,
+      },
     },
   });
 });
