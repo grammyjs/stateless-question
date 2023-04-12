@@ -24,8 +24,16 @@ how this works if you like.
 
 ## Install
 
+Node.js:
+
 ```
-$ npm install grammy @grammyjs/stateless-question
+$ npm install @grammyjs/stateless-question
+```
+
+Deno:
+
+```ts
+import {/* ... */} from "https://deno.land/x/grammy_stateless_question/mod.ts";
 ```
 
 ## Usage

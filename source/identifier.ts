@@ -1,14 +1,16 @@
-import {type Context as BaseContext} from 'grammy';
-import {html, markdown, markdownv2} from 'telegram-format';
-import {type Message, type MessageEntity} from 'grammy/types';
+import {
+  type Context as BaseContext,
+  type Message,
+  type MessageEntity,
+} from "./deps.deno.ts";
 
-const URL_TEXT = '\u200C';
-const BASE_URL = 'http://t.me/#';
-const URL_SEPERATOR = '#';
+const URL_TEXT = "\u200C";
+const BASE_URL = "http://t.me/#";
+const URL_SEPERATOR = "#";
 
-type ReplyToMessage = NonNullable<Message.CommonMessage['reply_to_message']>;
+type ReplyToMessage = NonNullable<Message.CommonMessage["reply_to_message"]>;
 export type ReplyToMessageContext<Context extends BaseContext> = Context & {
-  message: Message.CommonMessage & {reply_to_message: ReplyToMessage};
+  message: Message.CommonMessage & { reply_to_message: ReplyToMessage };
 };
 export type UrlMessageEntity = Readonly<MessageEntity.TextLinkMessageEntity>;
 
@@ -22,12 +24,10 @@ function getRelevantEntity<Context extends BaseContext>(
   context: ReplyToMessageContext<Context>,
 ): UrlMessageEntity | undefined {
   const repliedTo = context.message.reply_to_message;
-  const entities: ReadonlyArray<Readonly<MessageEntity>> = repliedTo.entities
-    ?? repliedTo.caption_entities
-    ?? [];
-  const relevantEntity = entities
-    .slice(-1)
-    .find((o): o is UrlMessageEntity => o.type === 'text_link');
+  const entities: ReadonlyArray<Readonly<MessageEntity>> = repliedTo.entities ??
+    repliedTo.caption_entities ?? [];
+  const relevantEntity = entities.slice(-1)
+    .find((o): o is UrlMessageEntity => o.type === "text_link");
   return relevantEntity;
 }
 
@@ -52,7 +52,7 @@ export function getAdditionalState<Context extends BaseContext>(
 
 function url(identifier: string, additionalState: string | undefined): string {
   return encodeURI(
-    BASE_URL + identifier + URL_SEPERATOR + (additionalState ?? ''),
+    BASE_URL + identifier + URL_SEPERATOR + (additionalState ?? ""),
   );
 }
 
@@ -60,19 +60,25 @@ export function suffixMarkdown(
   identifier: string,
   additionalState: string | undefined,
 ): string {
-  return markdown.url(URL_TEXT, url(identifier, additionalState));
+  return `[${URL_TEXT}](${url(identifier, additionalState).replace(/\)/, "")})`;
 }
 
 export function suffixMarkdownV2(
   identifier: string,
   additionalState: string | undefined,
 ): string {
-  return markdownv2.url(URL_TEXT, url(identifier, additionalState));
+  return `[${URL_TEXT}](${
+    escapeInternal(url(identifier, additionalState), ")")
+  })`;
+}
+
+function escapeInternal(text: string, escapeChars: string): string {
+  return text.replace(new RegExp(`[${escapeChars}\\\\]`, "g"), "\\$&");
 }
 
 export function suffixHTML(
   identifier: string,
   additionalState: string | undefined,
 ): string {
-  return html.url(URL_TEXT, url(identifier, additionalState));
+  return `<a href="${url(identifier, additionalState)}">${URL_TEXT}</a>`;
 }

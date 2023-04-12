@@ -1,4 +1,4 @@
-import {type Context as BaseContext} from 'grammy';
+import { type Context as BaseContext } from "./deps.deno.ts";
 import {
   getAdditionalState,
   isContextReplyToMessage,
@@ -7,7 +7,7 @@ import {
   suffixHTML,
   suffixMarkdown,
   suffixMarkdownV2,
-} from './identifier.js';
+} from "./identifier.ts";
 
 type ConstOrPromise<T> = T | Promise<T>;
 
@@ -23,8 +23,8 @@ export class StatelessQuestion<Context extends BaseContext> {
   middleware(): (context: Context, next: () => Promise<void>) => Promise<void> {
     return async (context, next) => {
       if (
-        isContextReplyToMessage(context)
-        && isReplyToQuestion(context, this.uniqueIdentifier)
+        isContextReplyToMessage(context) &&
+        isReplyToQuestion(context, this.uniqueIdentifier)
       ) {
         const additionalState = getAdditionalState(
           context,
@@ -49,39 +49,39 @@ export class StatelessQuestion<Context extends BaseContext> {
     return suffixMarkdownV2(this.uniqueIdentifier, additionalState);
   }
 
-  async replyWithHTML(
+  replyWithHTML(
     context: BaseContext,
     text: string,
     additionalState?: string,
   ) {
     const textResult = text + this.messageSuffixHTML(additionalState);
     return context.reply(textResult, {
-      reply_markup: {force_reply: true},
-      parse_mode: 'HTML',
+      reply_markup: { force_reply: true },
+      parse_mode: "HTML",
     });
   }
 
-  async replyWithMarkdown(
+  replyWithMarkdown(
     context: BaseContext,
     text: string,
     additionalState?: string,
   ) {
     const textResult = text + this.messageSuffixMarkdown(additionalState);
     return context.reply(textResult, {
-      reply_markup: {force_reply: true},
-      parse_mode: 'Markdown',
+      reply_markup: { force_reply: true },
+      parse_mode: "Markdown",
     });
   }
 
-  async replyWithMarkdownV2(
+  replyWithMarkdownV2(
     context: BaseContext,
     text: string,
     additionalState?: string,
   ) {
     const textResult = text + this.messageSuffixMarkdownV2(additionalState);
     return context.reply(textResult, {
-      reply_markup: {force_reply: true},
-      parse_mode: 'MarkdownV2',
+      reply_markup: { force_reply: true },
+      parse_mode: "MarkdownV2",
     });
   }
 }
