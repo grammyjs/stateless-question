@@ -1,11 +1,18 @@
 {
-  "extends": "@sindresorhus/tsconfig/tsconfig.json",
-  "include": [
-    "source",
-    "test"
-  ],
   "compilerOptions": {
-    "module": "CommonJS",
-    "outDir": "dist"
-  }
+    "forceConsistentCasingInFileNames": true,
+    "newLine": "lf",
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noUnusedParameters": true,
+    "rootDir": "./source/",
+    "strict": true,
+    "declaration": true,
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "outDir": "./out/",
+    "skipLibCheck": true,
+    "target": "es2019"
+  },
+  "include": ["source/"]
 }
