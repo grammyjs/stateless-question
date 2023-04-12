@@ -1,8 +1,5 @@
 import {
   type Context as BaseContext,
-  html,
-  markdown,
-  markdownv2,
   type Message,
   type MessageEntity,
 } from "./deps.deno.ts";
@@ -63,19 +60,25 @@ export function suffixMarkdown(
   identifier: string,
   additionalState: string | undefined,
 ): string {
-  return markdown.url(URL_TEXT, url(identifier, additionalState));
+  return `[${URL_TEXT}](${url(identifier, additionalState).replace(/\)/, "")})`;
 }
 
 export function suffixMarkdownV2(
   identifier: string,
   additionalState: string | undefined,
 ): string {
-  return markdownv2.url(URL_TEXT, url(identifier, additionalState));
+  return `[${URL_TEXT}](${
+    escapeInternal(url(identifier, additionalState), ")")
+  })`;
+}
+
+function escapeInternal(text: string, escapeChars: string): string {
+  return text.replace(new RegExp(`[${escapeChars}\\\\]`, "g"), "\\$&");
 }
 
 export function suffixHTML(
   identifier: string,
   additionalState: string | undefined,
 ): string {
-  return html.url(URL_TEXT, url(identifier, additionalState));
+  return `<a href="${url(identifier, additionalState)}">${URL_TEXT}</a>`;
 }
