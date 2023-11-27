@@ -24,8 +24,8 @@ how this works if you like.
 
 ## Install
 
-```
-$ npm install grammy @grammyjs/stateless-question
+```bash
+npm install grammy @grammyjs/stateless-question
 ```
 
 ## Usage
