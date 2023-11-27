@@ -1,107 +1,40 @@
-import test from 'ava';
-import {Bot} from 'grammy';
-import {
-  suffixHTML,
-  suffixMarkdown,
-  suffixMarkdownV2,
-} from '../source/identifier.js';
-import {StatelessQuestion} from '../source/index.js';
+import {deepStrictEqual, strictEqual} from 'node:assert';
+import {test} from 'node:test';
+import {Bot, type Context as BaseContext} from 'grammy';
+import {type AnswerFunction, StatelessQuestion} from './index.js';
 
-test('uniqueIdentifier keeps the same', t => {
+await test('uniqueIdentifier keeps the same', () => {
   const question = new StatelessQuestion('unicorns', () => {
-    t.pass();
+    throw new Error('shouldnt be called');
   });
 
-  t.is(question.uniqueIdentifier, 'unicorns');
+  strictEqual(question.uniqueIdentifier, 'unicorns');
 });
 
-test('messageSuffixMarkdown', t => {
-  t.is(
-    suffixMarkdown('unicorns', undefined),
-    '[\u200C](http://t.me/#unicorns#)',
-  );
-});
-
-test('messageSuffixMarkdown with additional state', t => {
-  t.is(
-    suffixMarkdown('unicorns', 'explode'),
-    '[\u200C](http://t.me/#unicorns#explode)',
-  );
-});
-
-test('messageSuffixMarkdown additional state gets url encoded correctly', t => {
-  t.is(
-    suffixMarkdown('unicorns', 'foo bar'),
-    '[\u200C](http://t.me/#unicorns#foo%20bar)',
-  );
-});
-
-test('messageSuffixMarkdownV2', t => {
-  t.is(
-    suffixMarkdownV2('unicorns', undefined),
-    '[\u200C](http://t.me/#unicorns#)',
-  );
-});
-
-test('messageSuffixMarkdownV2 with additional state', t => {
-  t.is(
-    suffixMarkdownV2('unicorns', 'explode'),
-    '[\u200C](http://t.me/#unicorns#explode)',
-  );
-});
-
-test('messageSuffixMarkdownV2 additional state gets url encoded correctly', t => {
-  t.is(
-    suffixMarkdownV2('unicorns', 'foo bar'),
-    '[\u200C](http://t.me/#unicorns#foo%20bar)',
-  );
-});
-
-test('messageSuffixHTML', t => {
-  t.is(
-    suffixHTML('unicorns', undefined),
-    '<a href="http://t.me/#unicorns#">\u200C</a>',
-  );
-});
-
-test('messageSuffixHTML with additional state', t => {
-  t.is(
-    suffixHTML('unicorns', 'explode'),
-    '<a href="http://t.me/#unicorns#explode">\u200C</a>',
-  );
-});
-
-test('messageSuffixHTML additional state gets url encoded correctly', t => {
-  t.is(
-    suffixHTML('unicorns', 'foo bar'),
-    '<a href="http://t.me/#unicorns#foo%20bar">\u200C</a>',
-  );
-});
-
-test('can replyWithMarkdown the question correctly', async t => {
+await test('can replyWithMarkdown the question correctly', async t => {
   const question = new StatelessQuestion('unicorns', () => {
-    t.fail();
+    throw new Error('shouldnt be called');
   });
 
   const bot = new Bot('123:ABC');
   (bot as any).botInfo = {};
-  bot.use(async (ctx, next) => {
-    ctx.reply = async (text, extra) => {
-      t.is(text, 'banana' + question.messageSuffixMarkdown());
-      t.deepEqual(extra, {
-        parse_mode: 'Markdown',
-        reply_markup: {force_reply: true},
-      });
+  const reply = t.mock.fn<BaseContext['reply']>(async (text, extra) => {
+    strictEqual(text, 'banana' + question.messageSuffixMarkdown());
+    deepStrictEqual(extra, {
+      parse_mode: 'Markdown',
+      reply_markup: {force_reply: true},
+    });
 
-      return {
-        message_id: 42,
-        date: 42,
-        from: {id: 42, first_name: 'Bob', is_bot: true},
-        chat: {id: 42, type: 'private', first_name: 'Bob'},
-        text: '666',
-      };
+    return {
+      message_id: 42,
+      date: 42,
+      from: {id: 42, first_name: 'Bob', is_bot: true},
+      chat: {id: 42, type: 'private', first_name: 'Bob'},
+      text: '666',
     };
-
+  });
+  bot.use(async (ctx, next) => {
+    ctx.reply = reply;
     return next();
   });
 
@@ -109,32 +42,33 @@ test('can replyWithMarkdown the question correctly', async t => {
   await bot.handleUpdate({
     update_id: 42,
   });
+  strictEqual(reply.mock.callCount(), 1);
 });
 
-test('can replyWithMarkdownV2 the question correctly', async t => {
+await test('can replyWithMarkdownV2 the question correctly', async t => {
   const question = new StatelessQuestion('unicorns', () => {
-    t.fail();
+    throw new Error('shouldnt be called');
   });
 
   const bot = new Bot('123:ABC');
   (bot as any).botInfo = {};
-  bot.use(async (ctx, next) => {
-    ctx.reply = async (text, extra) => {
-      t.is(text, 'banana' + question.messageSuffixMarkdown());
-      t.deepEqual(extra, {
-        parse_mode: 'MarkdownV2',
-        reply_markup: {force_reply: true},
-      });
+  const reply = t.mock.fn<BaseContext['reply']>(async (text, extra) => {
+    strictEqual(text, 'banana' + question.messageSuffixMarkdown());
+    deepStrictEqual(extra, {
+      parse_mode: 'MarkdownV2',
+      reply_markup: {force_reply: true},
+    });
 
-      return {
-        message_id: 42,
-        date: 42,
-        from: {id: 42, first_name: 'Bob', is_bot: true},
-        chat: {id: 42, type: 'private', first_name: 'Bob'},
-        text: '666',
-      };
+    return {
+      message_id: 42,
+      date: 42,
+      from: {id: 42, first_name: 'Bob', is_bot: true},
+      chat: {id: 42, type: 'private', first_name: 'Bob'},
+      text: '666',
     };
-
+  });
+  bot.use(async (ctx, next) => {
+    ctx.reply = reply;
     return next();
   });
 
@@ -142,32 +76,33 @@ test('can replyWithMarkdownV2 the question correctly', async t => {
   await bot.handleUpdate({
     update_id: 42,
   });
+  strictEqual(reply.mock.callCount(), 1);
 });
 
-test('can replyWithHTML the question correctly', async t => {
+await test('can replyWithHTML the question correctly', async t => {
   const question = new StatelessQuestion('unicorns', () => {
-    t.fail();
+    throw new Error('shouldnt be called');
   });
 
   const bot = new Bot('123:ABC');
   (bot as any).botInfo = {};
-  bot.use(async (ctx, next) => {
-    ctx.reply = async (text, extra) => {
-      t.is(text, 'banana' + question.messageSuffixHTML());
-      t.deepEqual(extra, {
-        parse_mode: 'HTML',
-        reply_markup: {force_reply: true},
-      });
+  const reply = t.mock.fn<BaseContext['reply']>(async (text, extra) => {
+    strictEqual(text, 'banana' + question.messageSuffixHTML());
+    deepStrictEqual(extra, {
+      parse_mode: 'HTML',
+      reply_markup: {force_reply: true},
+    });
 
-      return {
-        message_id: 42,
-        date: 42,
-        from: {id: 42, first_name: 'Bob', is_bot: true},
-        chat: {id: 42, type: 'private', first_name: 'Bob'},
-        text: '666',
-      };
+    return {
+      message_id: 42,
+      date: 42,
+      from: {id: 42, first_name: 'Bob', is_bot: true},
+      chat: {id: 42, type: 'private', first_name: 'Bob'},
+      text: '666',
     };
-
+  });
+  bot.use(async (ctx, next) => {
+    ctx.reply = reply;
     return next();
   });
 
@@ -175,18 +110,19 @@ test('can replyWithHTML the question correctly', async t => {
   await bot.handleUpdate({
     update_id: 42,
   });
+  strictEqual(reply.mock.callCount(), 1);
 });
 
-test('ignores different update', async t => {
+await test('ignores different update', async t => {
   const bot = new Bot('123:ABC');
   (bot as any).botInfo = {};
   const question = new StatelessQuestion('unicorns', () => {
-    t.fail();
+    throw new Error('shouldnt be called');
   });
   bot.use(question.middleware());
-  bot.use(() => {
-    t.pass();
-  });
+
+  const passes = t.mock.fn();
+  bot.use(passes);
 
   await bot.handleUpdate({
     update_id: 42,
@@ -197,18 +133,19 @@ test('ignores different update', async t => {
       data: '666',
     },
   });
+  strictEqual(passes.mock.callCount(), 1);
 });
 
-test('ignores different message', async t => {
+await test('ignores different message', async t => {
   const bot = new Bot('123:ABC');
   (bot as any).botInfo = {};
   const question = new StatelessQuestion('unicorns', () => {
-    t.fail();
+    throw new Error('shouldnt be called');
   });
   bot.use(question.middleware());
-  bot.use(() => {
-    t.pass();
-  });
+
+  const passes = t.mock.fn();
+  bot.use(passes);
 
   await bot.handleUpdate({
     update_id: 42,
@@ -220,18 +157,19 @@ test('ignores different message', async t => {
       text: 'unrelated',
     },
   });
+  strictEqual(passes.mock.callCount(), 1);
 });
 
-test('ignores message replying to something else', async t => {
+await test('ignores message replying to something else', async t => {
   const bot = new Bot('123:ABC');
   (bot as any).botInfo = {};
   const question = new StatelessQuestion('unicorns', () => {
-    t.fail();
+    throw new Error('shouldnt be called');
   });
   bot.use(question.middleware());
-  bot.use(() => {
-    t.pass();
-  });
+
+  const passes = t.mock.fn();
+  bot.use(passes);
 
   await bot.handleUpdate({
     update_id: 42,
@@ -251,18 +189,19 @@ test('ignores message replying to something else', async t => {
       },
     },
   });
+  strictEqual(passes.mock.callCount(), 1);
 });
 
-test('ignores message replying to something else with entities', async t => {
+await test('ignores message replying to something else with entities', async t => {
   const bot = new Bot('123:ABC');
   (bot as any).botInfo = {};
   const question = new StatelessQuestion('unicorns', () => {
-    t.fail();
+    throw new Error('shouldnt be called');
   });
   bot.use(question.middleware());
-  bot.use(() => {
-    t.pass();
-  });
+
+  const passes = t.mock.fn();
+  bot.use(passes);
 
   await bot.handleUpdate({
     update_id: 42,
@@ -288,18 +227,19 @@ test('ignores message replying to something else with entities', async t => {
       },
     },
   });
+  strictEqual(passes.mock.callCount(), 1);
 });
 
-test('ignores message replying to another question', async t => {
+await test('ignores message replying to another question', async t => {
   const bot = new Bot('123:ABC');
   (bot as any).botInfo = {};
   const question = new StatelessQuestion('unicorns', () => {
-    t.fail();
+    throw new Error('shouldnt be called');
   });
   bot.use(question.middleware());
-  bot.use(() => {
-    t.pass();
-  });
+
+  const passes = t.mock.fn();
+  bot.use(passes);
 
   await bot.handleUpdate({
     update_id: 42,
@@ -325,18 +265,20 @@ test('ignores message replying to another question', async t => {
       },
     },
   });
+  strictEqual(passes.mock.callCount(), 1);
 });
 
-test('correctly works with text message', async t => {
+await test('correctly works with text message', async t => {
   const bot = new Bot('123:ABC');
   (bot as any).botInfo = {};
-  const question = new StatelessQuestion('unicorns', ctx => {
-    t.is(ctx.message.message_id, 42);
-    t.is(ctx.message.reply_to_message.message_id, 43);
+  const answer = t.mock.fn<AnswerFunction<BaseContext>>(ctx => {
+    strictEqual(ctx.message.message_id, 42);
+    strictEqual(ctx.message.reply_to_message.message_id, 43);
   });
+  const question = new StatelessQuestion('unicorns', answer);
   bot.use(question.middleware());
   bot.use(() => {
-    t.fail();
+    throw new Error('shouldnt be called');
   });
 
   await bot.handleUpdate({
@@ -363,19 +305,23 @@ test('correctly works with text message', async t => {
       },
     },
   });
+  strictEqual(answer.mock.callCount(), 1);
 });
 
-test('correctly works with text message with additional state', async t => {
+await test('correctly works with text message with additional state', async t => {
   const bot = new Bot('123:ABC');
   (bot as any).botInfo = {};
-  const question = new StatelessQuestion('unicorns', (ctx, additionalState) => {
-    t.is(ctx.message.message_id, 42);
-    t.is(ctx.message.reply_to_message.message_id, 43);
-    t.is(additionalState, 'explode');
-  });
+  const answer = t.mock.fn<AnswerFunction<BaseContext>>(
+    (ctx, additionalState) => {
+      strictEqual(ctx.message.message_id, 42);
+      strictEqual(ctx.message.reply_to_message.message_id, 43);
+      strictEqual(additionalState, 'explode');
+    },
+  );
+  const question = new StatelessQuestion('unicorns', answer);
   bot.use(question.middleware());
   bot.use(() => {
-    t.fail();
+    throw new Error('shouldnt be called');
   });
 
   await bot.handleUpdate({
@@ -402,19 +348,23 @@ test('correctly works with text message with additional state', async t => {
       },
     },
   });
+  strictEqual(answer.mock.callCount(), 1);
 });
 
-test('additional state url encoding is removed before passed to function', async t => {
+await test('additional state url encoding is removed before passed to function', async t => {
   const bot = new Bot('123:ABC');
   (bot as any).botInfo = {};
-  const question = new StatelessQuestion('unicorns', (ctx, additionalState) => {
-    t.is(ctx.message.message_id, 42);
-    t.is(ctx.message.reply_to_message.message_id, 43);
-    t.is(additionalState, 'foo bar');
-  });
+  const answer = t.mock.fn<AnswerFunction<BaseContext>>(
+    (ctx, additionalState) => {
+      strictEqual(ctx.message.message_id, 42);
+      strictEqual(ctx.message.reply_to_message.message_id, 43);
+      strictEqual(additionalState, 'foo bar');
+    },
+  );
+  const question = new StatelessQuestion('unicorns', answer);
   bot.use(question.middleware());
   bot.use(() => {
-    t.fail();
+    throw new Error('shouldnt be called');
   });
 
   await bot.handleUpdate({
@@ -441,18 +391,20 @@ test('additional state url encoding is removed before passed to function', async
       },
     },
   });
+  strictEqual(answer.mock.callCount(), 1);
 });
 
-test('correctly works with media message', async t => {
+await test('correctly works with media message', async t => {
   const bot = new Bot('123:ABC');
   (bot as any).botInfo = {};
-  const question = new StatelessQuestion('unicorns', ctx => {
-    t.is(ctx.message.message_id, 42);
-    t.is(ctx.message.reply_to_message.message_id, 43);
+  const answer = t.mock.fn<AnswerFunction<BaseContext>>(ctx => {
+    strictEqual(ctx.message.message_id, 42);
+    strictEqual(ctx.message.reply_to_message.message_id, 43);
   });
+  const question = new StatelessQuestion('unicorns', answer);
   bot.use(question.middleware());
   bot.use(() => {
-    t.fail();
+    throw new Error('shouldnt be called');
   });
 
   await bot.handleUpdate({
@@ -480,4 +432,5 @@ test('correctly works with media message', async t => {
       },
     },
   });
+  strictEqual(answer.mock.callCount(), 1);
 });

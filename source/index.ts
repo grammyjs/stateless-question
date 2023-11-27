@@ -10,14 +10,15 @@ import {
 } from './identifier.js';
 
 type ConstOrPromise<T> = T | Promise<T>;
+export type AnswerFunction<Context extends BaseContext> = (
+  context: ReplyToMessageContext<Context>,
+  additionalState: string,
+) => ConstOrPromise<void>;
 
 export class StatelessQuestion<Context extends BaseContext> {
   constructor(
     public readonly uniqueIdentifier: string,
-    private readonly answer: (
-      context: ReplyToMessageContext<Context>,
-      additionalState: string,
-    ) => ConstOrPromise<void>,
+    private readonly answer: AnswerFunction<Context>,
   ) {}
 
   middleware(): (context: Context, next: () => Promise<void>) => Promise<void> {

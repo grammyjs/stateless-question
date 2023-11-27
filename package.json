@@ -24,7 +24,7 @@
 	"scripts": {
 		"build": "del-cli dist && tsc",
 		"prepack": "npm run build",
-		"test": "tsc --sourceMap && xo && c8 --all ava"
+		"test": "tsc --sourceMap && xo && c8 --all node --test --enable-source-maps"
 	},
 	"type": "module",
 	"engines": {
@@ -38,8 +38,7 @@
 	},
 	"devDependencies": {
 		"@sindresorhus/tsconfig": "^5.0.0",
-		"@types/node": "^14.18.22",
-		"ava": "^5.0.1",
+		"@types/node": "^18.18.13",
 		"c8": "^8.0.1",
 		"del-cli": "^5.0.0",
 		"grammy": "^1.10.1",
@@ -47,17 +46,17 @@
 		"xo": "^0.56.0"
 	},
 	"files": [
-		"dist/source",
-		"!*.test.*"
+		"dist",
+		"!*.test.*",
+		"!test.*"
 	],
-	"main": "./dist/source/index.js",
-	"types": "./dist/source/index.d.ts",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
 	"xo": {
 		"space": 2,
 		"rules": {
 			"@typescript-eslint/naming-convention": "off",
-			"@typescript-eslint/prefer-readonly-parameter-types": "off",
-			"ava/no-ignored-test-files": "off"
+			"@typescript-eslint/prefer-readonly-parameter-types": "off"
 		},
 		"overrides": [
 			{
