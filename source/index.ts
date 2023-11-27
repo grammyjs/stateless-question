@@ -1,4 +1,4 @@
-import {type Context as BaseContext} from 'grammy';
+import type {Context as BaseContext} from 'grammy';
 import {
   getAdditionalState,
   isContextReplyToMessage,
