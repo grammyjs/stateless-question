@@ -1,4 +1,5 @@
 import type {Context as BaseContext} from 'grammy';
+import type {Message} from 'grammy/types';
 import {
   getAdditionalState,
   isContextReplyToMessage,
@@ -54,7 +55,7 @@ export class StatelessQuestion<Context extends BaseContext> {
     context: BaseContext,
     text: string,
     additionalState?: string,
-  ) {
+  ): Promise<Message.TextMessage> {
     const textResult = text + this.messageSuffixHTML(additionalState);
     return context.reply(textResult, {
       reply_markup: {force_reply: true},
@@ -66,7 +67,7 @@ export class StatelessQuestion<Context extends BaseContext> {
     context: BaseContext,
     text: string,
     additionalState?: string,
-  ) {
+  ): Promise<Message.TextMessage> {
     const textResult = text + this.messageSuffixMarkdown(additionalState);
     return context.reply(textResult, {
       reply_markup: {force_reply: true},
@@ -78,7 +79,7 @@ export class StatelessQuestion<Context extends BaseContext> {
     context: BaseContext,
     text: string,
     additionalState?: string,
-  ) {
+  ): Promise<Message.TextMessage> {
     const textResult = text + this.messageSuffixMarkdownV2(additionalState);
     return context.reply(textResult, {
       reply_markup: {force_reply: true},
