@@ -1,4 +1,4 @@
-import {strictEqual} from 'node:assert';
+import {strictEqual, throws} from 'node:assert';
 import {test} from 'node:test';
 import {suffixHTML, suffixMarkdown, suffixMarkdownV2} from './identifier.js';
 
@@ -23,6 +23,20 @@ await test('messageSuffixMarkdown additional state gets url encoded correctly', 
   );
 });
 
+await test('messageSuffixMarkdown throws on ) in identifier', () => {
+  throws(
+    () => suffixMarkdown('uni)orns', undefined),
+    {message: /bracket.+\)/},
+  );
+});
+
+await test('messageSuffixMarkdown throws on ) in additionalState', () => {
+  throws(
+    () => suffixMarkdown('unicorns', 'b)a'),
+    {message: /bracket.+\)/},
+  );
+});
+
 await test('messageSuffixMarkdownV2', () => {
   strictEqual(
     suffixMarkdownV2('unicorns', undefined),
@@ -41,6 +55,13 @@ await test('messageSuffixMarkdownV2 additional state gets url encoded correctly'
   strictEqual(
     suffixMarkdownV2('unicorns', 'foo bar'),
     '[\u200C](http://t.me/#unicorns#foo%20bar)',
+  );
+});
+
+await test('messageSuffixMarkdownV2 with ) escapes correctly', () => {
+  strictEqual(
+    suffixMarkdownV2('uni)orns', 'exp)ode'),
+    '[\u200C](http://t.me/#uni\\)orns#exp\\)ode)',
   );
 });
 

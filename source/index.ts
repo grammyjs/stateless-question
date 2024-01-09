@@ -17,10 +17,14 @@ export type AnswerFunction<Context extends BaseContext> = (
 ) => ConstOrPromise<void>;
 
 export class StatelessQuestion<Context extends BaseContext> {
+  public readonly uniqueIdentifier: string;
+
   constructor(
-    public readonly uniqueIdentifier: string,
+    uniqueIdentifier: string,
     private readonly answer: AnswerFunction<Context>,
-  ) {}
+  ) {
+    this.uniqueIdentifier = encodeURIComponent(uniqueIdentifier);
+  }
 
   middleware(): (context: Context, next: () => Promise<void>) => Promise<void> {
     return async (context, next) => {

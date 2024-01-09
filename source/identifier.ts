@@ -1,6 +1,5 @@
 import type {Context as BaseContext} from 'grammy';
 import type {Message, MessageEntity} from 'grammy/types';
-import {html, markdown, markdownv2} from 'telegram-format';
 
 const URL_TEXT = '\u200C';
 const BASE_URL = 'http://t.me/#';
@@ -51,28 +50,38 @@ export function getAdditionalState<Context extends BaseContext>(
 }
 
 function url(identifier: string, additionalState: string | undefined): string {
-  return encodeURI(
-    BASE_URL + identifier + URL_SEPERATOR + (additionalState ?? ''),
-  );
+  return BASE_URL + identifier + URL_SEPERATOR
+    + encodeURIComponent(additionalState ?? '');
 }
 
+const MARKDOWN_PREFIX = `[${URL_TEXT}](`;
 export function suffixMarkdown(
   identifier: string,
   additionalState: string | undefined,
 ): string {
-  return markdown.url(URL_TEXT, url(identifier, additionalState));
+  const part = url(identifier, additionalState);
+  if (part.includes(')')) {
+    throw new Error(
+      'Markdown does not work with a stateless-question identifier or additionalState containing a close bracket `)`. Use MarkdownV2 or HTML.',
+    );
+  }
+
+  return MARKDOWN_PREFIX + part + ')';
 }
 
 export function suffixMarkdownV2(
   identifier: string,
   additionalState: string | undefined,
 ): string {
-  return markdownv2.url(URL_TEXT, url(identifier, additionalState));
+  // eslint-disable-next-line unicorn/prefer-string-replace-all
+  const part = url(identifier, additionalState).replace(/\)/g, '\\)');
+  return MARKDOWN_PREFIX + part + ')';
 }
 
+const HTML_SUFFIX = `">${URL_TEXT}</a>`;
 export function suffixHTML(
   identifier: string,
   additionalState: string | undefined,
 ): string {
-  return html.url(URL_TEXT, url(identifier, additionalState));
+  return '<a href="' + url(identifier, additionalState) + HTML_SUFFIX;
 }
