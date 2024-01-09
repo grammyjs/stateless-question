@@ -59,7 +59,7 @@
 			{
 				"files": [
 					"**/*.test.*",
-					"test/**/*.*"
+					"**/test.*"
 				],
 				"rules": {
 					"@typescript-eslint/no-unsafe-assignment": "off",
