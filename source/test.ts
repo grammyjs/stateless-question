@@ -1,20 +1,24 @@
-import {deepStrictEqual, strictEqual} from 'node:assert';
+import {deepStrictEqual, strictEqual, throws} from 'node:assert';
 import {test} from 'node:test';
 import {Bot, type Context as BaseContext} from 'grammy';
 import {type AnswerFunction, StatelessQuestion} from './index.js';
 
+function shouldntBeCalled(): never {
+  throw new Error('shouldnt be called');
+}
+
+await test('shouldntBeCalled works', () => {
+  throws(shouldntBeCalled);
+});
+
 await test('uniqueIdentifier keeps the same', () => {
-  const question = new StatelessQuestion('unicorns', () => {
-    throw new Error('shouldnt be called');
-  });
+  const question = new StatelessQuestion('unicorns', shouldntBeCalled);
 
   strictEqual(question.uniqueIdentifier, 'unicorns');
 });
 
 await test('can replyWithMarkdown the question correctly', async t => {
-  const question = new StatelessQuestion('unicorns', () => {
-    throw new Error('shouldnt be called');
-  });
+  const question = new StatelessQuestion('unicorns', shouldntBeCalled);
 
   const bot = new Bot('123:ABC');
   (bot as any).botInfo = {};
@@ -46,9 +50,7 @@ await test('can replyWithMarkdown the question correctly', async t => {
 });
 
 await test('can replyWithMarkdownV2 the question correctly', async t => {
-  const question = new StatelessQuestion('unicorns', () => {
-    throw new Error('shouldnt be called');
-  });
+  const question = new StatelessQuestion('unicorns', shouldntBeCalled);
 
   const bot = new Bot('123:ABC');
   (bot as any).botInfo = {};
@@ -80,9 +82,7 @@ await test('can replyWithMarkdownV2 the question correctly', async t => {
 });
 
 await test('can replyWithHTML the question correctly', async t => {
-  const question = new StatelessQuestion('unicorns', () => {
-    throw new Error('shouldnt be called');
-  });
+  const question = new StatelessQuestion('unicorns', shouldntBeCalled);
 
   const bot = new Bot('123:ABC');
   (bot as any).botInfo = {};
@@ -116,9 +116,7 @@ await test('can replyWithHTML the question correctly', async t => {
 await test('ignores different update', async t => {
   const bot = new Bot('123:ABC');
   (bot as any).botInfo = {};
-  const question = new StatelessQuestion('unicorns', () => {
-    throw new Error('shouldnt be called');
-  });
+  const question = new StatelessQuestion('unicorns', shouldntBeCalled);
   bot.use(question.middleware());
 
   const passes = t.mock.fn();
@@ -139,9 +137,7 @@ await test('ignores different update', async t => {
 await test('ignores different message', async t => {
   const bot = new Bot('123:ABC');
   (bot as any).botInfo = {};
-  const question = new StatelessQuestion('unicorns', () => {
-    throw new Error('shouldnt be called');
-  });
+  const question = new StatelessQuestion('unicorns', shouldntBeCalled);
   bot.use(question.middleware());
 
   const passes = t.mock.fn();
@@ -163,9 +159,7 @@ await test('ignores different message', async t => {
 await test('ignores message replying to something else', async t => {
   const bot = new Bot('123:ABC');
   (bot as any).botInfo = {};
-  const question = new StatelessQuestion('unicorns', () => {
-    throw new Error('shouldnt be called');
-  });
+  const question = new StatelessQuestion('unicorns', shouldntBeCalled);
   bot.use(question.middleware());
 
   const passes = t.mock.fn();
@@ -195,9 +189,7 @@ await test('ignores message replying to something else', async t => {
 await test('ignores message replying to something else with entities', async t => {
   const bot = new Bot('123:ABC');
   (bot as any).botInfo = {};
-  const question = new StatelessQuestion('unicorns', () => {
-    throw new Error('shouldnt be called');
-  });
+  const question = new StatelessQuestion('unicorns', shouldntBeCalled);
   bot.use(question.middleware());
 
   const passes = t.mock.fn();
@@ -233,9 +225,7 @@ await test('ignores message replying to something else with entities', async t =
 await test('ignores message replying to another question', async t => {
   const bot = new Bot('123:ABC');
   (bot as any).botInfo = {};
-  const question = new StatelessQuestion('unicorns', () => {
-    throw new Error('shouldnt be called');
-  });
+  const question = new StatelessQuestion('unicorns', shouldntBeCalled);
   bot.use(question.middleware());
 
   const passes = t.mock.fn();
@@ -277,9 +267,7 @@ await test('correctly works with text message', async t => {
   });
   const question = new StatelessQuestion('unicorns', answer);
   bot.use(question.middleware());
-  bot.use(() => {
-    throw new Error('shouldnt be called');
-  });
+  bot.use(shouldntBeCalled);
 
   await bot.handleUpdate({
     update_id: 42,
@@ -320,9 +308,7 @@ await test('correctly works with text message with additional state', async t =>
   );
   const question = new StatelessQuestion('unicorns', answer);
   bot.use(question.middleware());
-  bot.use(() => {
-    throw new Error('shouldnt be called');
-  });
+  bot.use(shouldntBeCalled);
 
   await bot.handleUpdate({
     update_id: 42,
@@ -363,9 +349,7 @@ await test('additional state url encoding is removed before passed to function',
   );
   const question = new StatelessQuestion('unicorns', answer);
   bot.use(question.middleware());
-  bot.use(() => {
-    throw new Error('shouldnt be called');
-  });
+  bot.use(shouldntBeCalled);
 
   await bot.handleUpdate({
     update_id: 42,
@@ -403,9 +387,7 @@ await test('correctly works with media message', async t => {
   });
   const question = new StatelessQuestion('unicorns', answer);
   bot.use(question.middleware());
-  bot.use(() => {
-    throw new Error('shouldnt be called');
-  });
+  bot.use(shouldntBeCalled);
 
   await bot.handleUpdate({
     update_id: 42,
