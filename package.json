@@ -40,7 +40,7 @@
 		"del-cli": "^5.0.0",
 		"grammy": "^1.10.1",
 		"typescript": "^5.0.2",
-		"xo": "^0.56.0"
+		"xo": "^0.57.0"
 	},
 	"files": [
 		"dist",
@@ -53,7 +53,8 @@
 		"space": 2,
 		"rules": {
 			"@typescript-eslint/naming-convention": "off",
-			"@typescript-eslint/prefer-readonly-parameter-types": "off"
+			"@typescript-eslint/prefer-readonly-parameter-types": "off",
+			"unicorn/prevent-abbreviations": "off"
 		},
 		"overrides": [
 			{
