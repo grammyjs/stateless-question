@@ -50,7 +50,6 @@
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
 	"xo": {
-		"space": 2,
 		"rules": {
 			"@typescript-eslint/naming-convention": "off",
 			"@typescript-eslint/prefer-readonly-parameter-types": "off",
