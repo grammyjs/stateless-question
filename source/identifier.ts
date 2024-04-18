@@ -46,7 +46,7 @@ export function getAdditionalState<Context extends BaseContext>(
 	const relevantEntity = getRelevantEntity(context)!;
 	const expectedUrl = url(identifier, undefined);
 	const part = relevantEntity.url.slice(expectedUrl.length);
-	return decodeURI(part);
+	return decodeURIComponent(part);
 }
 
 function url(identifier: string, additionalState: string | undefined): string {

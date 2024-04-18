@@ -344,7 +344,7 @@ await test('additional state url encoding is removed before passed to function',
 		(ctx, additionalState) => {
 			strictEqual(ctx.message.message_id, 42);
 			strictEqual(ctx.message.reply_to_message.message_id, 43);
-			strictEqual(additionalState, 'foo bar');
+			strictEqual(additionalState, 'foo bar/');
 		},
 	);
 	const question = new StatelessQuestion('unicorns', answer);
@@ -368,7 +368,7 @@ await test('additional state url encoding is removed before passed to function',
 				text: 'whatever',
 				entities: [{
 					type: 'text_link',
-					url: 'http://t.me/#unicorns#foo%20bar',
+					url: 'http://t.me/#unicorns#foo%20bar%2F',
 					offset: 0,
 					length: 2,
 				}],
