@@ -34,7 +34,7 @@
 		"grammy": "^1.10.1"
 	},
 	"devDependencies": {
-		"@sindresorhus/tsconfig": "^6.0.0",
+		"@sindresorhus/tsconfig": "^7.0.0",
 		"@types/node": "^18.18.13",
 		"c8": "^10.1.2",
 		"del-cli": "^6.0.0",
