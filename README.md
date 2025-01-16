@@ -19,7 +19,7 @@ make sure the `uniqueIdentifier` is unique within your bot.
 
 Special thanks to [@Ramin-Bateni](https://github.com/Ramin-Bateni) and take a
 look on
-[his explanation](https://github.com/EdJoPaTo/telegraf-inline-menu/issues/44#issuecomment-541063654)
+[his explanation](https://github.com/EdJoPaTo/grammy-inline-menu/issues/44#issuecomment-541063654)
 how this works if you like.
 
 ## Install
@@ -64,7 +64,7 @@ When your question is specific for a certain topic then you can use the
 `additionalState` to remember that stateless with the message. For example when
 you want to know in which room an event is happening you can set the event as
 `additionalState`. This also helpful when working with
-[telegraf-inline-menu](https://github.com/EdJoPaTo/telegraf-inline-menu) to
+[grammy-inline-menu](https://github.com/EdJoPaTo/grammy-inline-menu) to
 store the path to return the menu to.
 
 ```js
@@ -120,7 +120,7 @@ await ctx.replyWithHTML(
 
 ### The ForceReply question is always shown in some Telegram Clients even long after the question has already answered
 
-see [#4](https://github.com/EdJoPaTo/telegraf-stateless-question/issues/4)
+see [#4](https://github.com/grammyjs/stateless-question/issues/4)
 
 As of the design choices Telegram made to create ForceReply it's hard for a
 Telegram Client to know if a question is still relevant or not. As a workaround
@@ -140,7 +140,7 @@ const unicornQuestion = new StatelessQuestion("unicorns", async (ctx) => {
 
 ### Sending an abort/back (inline) button with the question message
 
-see [#1](https://github.com/EdJoPaTo/telegraf-stateless-question/issues/1)
+see [#1](https://github.com/grammyjs/stateless-question/issues/1)
 
 Telegram allows only one `reply_markup` at a time. As this library relies on
 replies to a message [ForceReply](https://core.telegram.org/bots/api#forcereply)
