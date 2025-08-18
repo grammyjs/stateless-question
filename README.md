@@ -69,26 +69,26 @@ store the path to return the menu to.
 
 ```js
 const locationQuestion = new StatelessQuestion(
-  "target",
-  (ctx, additionalState) => {
-    console.log("Location of", additionalState, "is", ctx.message.text);
-    saveHeroLocation(additionalState, ctx.message.text);
-  },
+	"target",
+	(ctx, additionalState) => {
+		console.log("Location of", additionalState, "is", ctx.message.text);
+		saveHeroLocation(additionalState, ctx.message.text);
+	},
 );
 
 // Dont forget to use the middleware
 bot.use(locationQuestion.middleware());
 
 bot.command("batman", async (ctx) => {
-  return locationQuestion.replyWithMarkdown(ctx, "Where is Batman?", "batman");
+	return locationQuestion.replyWithMarkdown(ctx, "Where is Batman?", "batman");
 });
 
 bot.command("superman", async (ctx) => {
-  return locationQuestion.replyWithMarkdown(
-    ctx,
-    "Where is superman?",
-    "superman",
-  );
+	return locationQuestion.replyWithMarkdown(
+		ctx,
+		"Where is superman?",
+		"superman",
+	);
 });
 ```
 
@@ -104,15 +104,15 @@ this.
 
 ```ts
 await ctx.replyWithHTML(
-  "What are unicorns doing?" + unicornQuestion.messageSuffixHTML(),
-  {
-    parse_mode: "HTML",
-    reply_to_message_id: ctx.message.message_id,
-    reply_markup: {
-      force_reply: true,
-      selective: true,
-    },
-  },
+	"What are unicorns doing?" + unicornQuestion.messageSuffixHTML(),
+	{
+		parse_mode: "HTML",
+		reply_to_message_id: ctx.message.message_id,
+		reply_markup: {
+			force_reply: true,
+			selective: true,
+		},
+	},
 );
 ```
 
@@ -131,10 +131,10 @@ one is possible for a message).
 
 ```ts
 const unicornQuestion = new StatelessQuestion("unicorns", async (ctx) => {
-  console.log("User thinks unicorns are doing:", ctx.message);
-  await ctx.reply("if you think so...", {
-    reply_markup: { remove_keyboard: true },
-  });
+	console.log("User thinks unicorns are doing:", ctx.message);
+	await ctx.reply("if you think so...", {
+		reply_markup: { remove_keyboard: true },
+	});
 });
 ```
 

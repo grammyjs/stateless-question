@@ -210,12 +210,14 @@ await test('ignores message replying to something else with entities', async t =
 				chat: {id: 42, type: 'private', first_name: 'Bob'},
 				date: 10,
 				text: 'whatever',
-				entities: [{
-					type: 'text_link',
-					url: 'http://t.me/EdJoPaTo',
-					offset: 0,
-					length: 2,
-				}],
+				entities: [
+					{
+						type: 'text_link',
+						url: 'http://t.me/EdJoPaTo',
+						offset: 0,
+						length: 2,
+					},
+				],
 			},
 		},
 	});
@@ -246,12 +248,14 @@ await test('ignores message replying to another question', async t => {
 				chat: {id: 42, type: 'private', first_name: 'Bob'},
 				date: 10,
 				text: 'whatever',
-				entities: [{
-					type: 'text_link',
-					url: 'http://t.me/#other#',
-					offset: 0,
-					length: 2,
-				}],
+				entities: [
+					{
+						type: 'text_link',
+						url: 'http://t.me/#other#',
+						offset: 0,
+						length: 2,
+					},
+				],
 			},
 		},
 	});
@@ -284,12 +288,14 @@ await test('correctly works with text message', async t => {
 				chat: {id: 42, type: 'private', first_name: 'Bob'},
 				date: 10,
 				text: 'whatever',
-				entities: [{
-					type: 'text_link',
-					url: 'http://t.me/#unicorns#',
-					offset: 0,
-					length: 2,
-				}],
+				entities: [
+					{
+						type: 'text_link',
+						url: 'http://t.me/#unicorns#',
+						offset: 0,
+						length: 2,
+					},
+				],
 			},
 		},
 	});
@@ -299,13 +305,11 @@ await test('correctly works with text message', async t => {
 await test('correctly works with text message with additional state', async t => {
 	const bot = new Bot('123:ABC');
 	(bot as any).botInfo = {};
-	const answer = t.mock.fn<AnswerFunction<BaseContext>>(
-		(ctx, additionalState) => {
-			strictEqual(ctx.message.message_id, 42);
-			strictEqual(ctx.message.reply_to_message.message_id, 43);
-			strictEqual(additionalState, 'explode');
-		},
-	);
+	const answer = t.mock.fn<AnswerFunction<BaseContext>>((ctx, additionalState) => {
+		strictEqual(ctx.message.message_id, 42);
+		strictEqual(ctx.message.reply_to_message.message_id, 43);
+		strictEqual(additionalState, 'explode');
+	});
 	const question = new StatelessQuestion('unicorns', answer);
 	bot.use(question.middleware());
 	bot.use(shouldntBeCalled);
@@ -325,12 +329,14 @@ await test('correctly works with text message with additional state', async t =>
 				chat: {id: 42, type: 'private', first_name: 'Bob'},
 				date: 10,
 				text: 'whatever',
-				entities: [{
-					type: 'text_link',
-					url: 'http://t.me/#unicorns#explode',
-					offset: 0,
-					length: 2,
-				}],
+				entities: [
+					{
+						type: 'text_link',
+						url: 'http://t.me/#unicorns#explode',
+						offset: 0,
+						length: 2,
+					},
+				],
 			},
 		},
 	});
@@ -340,13 +346,11 @@ await test('correctly works with text message with additional state', async t =>
 await test('additional state url encoding is removed before passed to function', async t => {
 	const bot = new Bot('123:ABC');
 	(bot as any).botInfo = {};
-	const answer = t.mock.fn<AnswerFunction<BaseContext>>(
-		(ctx, additionalState) => {
-			strictEqual(ctx.message.message_id, 42);
-			strictEqual(ctx.message.reply_to_message.message_id, 43);
-			strictEqual(additionalState, 'foo bar/');
-		},
-	);
+	const answer = t.mock.fn<AnswerFunction<BaseContext>>((ctx, additionalState) => {
+		strictEqual(ctx.message.message_id, 42);
+		strictEqual(ctx.message.reply_to_message.message_id, 43);
+		strictEqual(additionalState, 'foo bar/');
+	});
 	const question = new StatelessQuestion('unicorns', answer);
 	bot.use(question.middleware());
 	bot.use(shouldntBeCalled);
@@ -366,12 +370,14 @@ await test('additional state url encoding is removed before passed to function',
 				chat: {id: 42, type: 'private', first_name: 'Bob'},
 				date: 10,
 				text: 'whatever',
-				entities: [{
-					type: 'text_link',
-					url: 'http://t.me/#unicorns#foo%20bar%2F',
-					offset: 0,
-					length: 2,
-				}],
+				entities: [
+					{
+						type: 'text_link',
+						url: 'http://t.me/#unicorns#foo%20bar%2F',
+						offset: 0,
+						length: 2,
+					},
+				],
 			},
 		},
 	});
@@ -405,12 +411,14 @@ await test('correctly works with media message', async t => {
 				date: 10,
 				photo: [],
 				caption: 'whatever',
-				caption_entities: [{
-					type: 'text_link',
-					url: 'http://t.me/#unicorns#',
-					offset: 0,
-					length: 2,
-				}],
+				caption_entities: [
+					{
+						type: 'text_link',
+						url: 'http://t.me/#unicorns#',
+						offset: 0,
+						length: 2,
+					},
+				],
 			},
 		},
 	});

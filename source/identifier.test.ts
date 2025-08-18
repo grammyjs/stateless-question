@@ -24,17 +24,13 @@ await test('messageSuffixMarkdown additional state gets url encoded correctly', 
 });
 
 await test('messageSuffixMarkdown throws on ) in identifier', () => {
-	throws(
-		() => suffixMarkdown('uni)orns', undefined),
-		{message: /bracket.+\)/},
-	);
+	throws(() => suffixMarkdown('uni)orns', undefined), {
+		message: /bracket.+\)/,
+	});
 });
 
 await test('messageSuffixMarkdown throws on ) in additionalState', () => {
-	throws(
-		() => suffixMarkdown('unicorns', 'b)a'),
-		{message: /bracket.+\)/},
-	);
+	throws(() => suffixMarkdown('unicorns', 'b)a'), {message: /bracket.+\)/});
 });
 
 await test('messageSuffixMarkdownV2', () => {

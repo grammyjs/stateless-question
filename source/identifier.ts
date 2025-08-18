@@ -11,19 +11,14 @@ export type ReplyToMessageContext<Context extends BaseContext> = Context & {
 };
 export type UrlMessageEntity = Readonly<MessageEntity.TextLinkMessageEntity>;
 
-export function isContextReplyToMessage<Context extends BaseContext>(
-	context: Context,
-): context is ReplyToMessageContext<Context> {
+export function isContextReplyToMessage<Context extends BaseContext>(context: Context): context is ReplyToMessageContext<Context> {
 	return Boolean(context.message?.reply_to_message);
 }
 
-function getRelevantEntity<Context extends BaseContext>(
-	context: ReplyToMessageContext<Context>,
-): UrlMessageEntity | undefined {
+function getRelevantEntity<Context extends BaseContext>(context: ReplyToMessageContext<Context>): UrlMessageEntity | undefined {
 	const repliedTo = context.message.reply_to_message;
 	const entities: ReadonlyArray<Readonly<MessageEntity>> = repliedTo.entities
-		?? repliedTo.caption_entities
-		?? [];
+		?? repliedTo.caption_entities ?? [];
 	const relevantEntity = entities
 		.slice(-1)
 		.find((o): o is UrlMessageEntity => o.type === 'text_link');
@@ -50,7 +45,9 @@ export function getAdditionalState<Context extends BaseContext>(
 }
 
 function url(identifier: string, additionalState: string | undefined): string {
-	return BASE_URL + identifier + URL_SEPERATOR
+	return BASE_URL
+		+ identifier
+		+ URL_SEPERATOR
 		+ encodeURIComponent(additionalState ?? '');
 }
 
@@ -61,9 +58,7 @@ export function suffixMarkdown(
 ): string {
 	const part = url(identifier, additionalState);
 	if (part.includes(')')) {
-		throw new Error(
-			'Markdown does not work with a stateless-question identifier or additionalState containing a close bracket `)`. Use MarkdownV2 or HTML.',
-		);
+		throw new Error('Markdown does not work with a stateless-question identifier or additionalState containing a close bracket `)`. Use MarkdownV2 or HTML.');
 	}
 
 	return MARKDOWN_PREFIX + part + ')';
@@ -74,7 +69,7 @@ export function suffixMarkdownV2(
 	additionalState: string | undefined,
 ): string {
 	// eslint-disable-next-line unicorn/prefer-string-replace-all
-	const part = url(identifier, additionalState).replace(/\)/g, '\\)');
+	const part = url(identifier, additionalState).replace(/\)/g, String.raw`\)`);
 	return MARKDOWN_PREFIX + part + ')';
 }
 

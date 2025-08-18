@@ -39,8 +39,8 @@
 		"c8": "^10.1.2",
 		"del-cli": "^6.0.0",
 		"grammy": "^1.10.1",
-		"typescript": "^5.5.2",
-		"xo": "^0.60.0"
+		"typescript": "^5.9.2",
+		"xo": "^1.2.2"
 	},
 	"files": [
 		"dist",
@@ -49,25 +49,11 @@
 	],
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
-	"xo": {
-		"rules": {
-			"@typescript-eslint/naming-convention": "off",
-			"@typescript-eslint/prefer-readonly-parameter-types": "off",
-			"unicorn/prevent-abbreviations": "off"
-		},
-		"overrides": [
-			{
-				"files": [
-					"**/*.test.*",
-					"**/test.*"
-				],
-				"rules": {
-					"@typescript-eslint/no-unsafe-assignment": "off",
-					"@typescript-eslint/prefer-readonly-parameter-types": "off",
-					"n/no-unsupported-features/es-syntax": "off",
-					"n/no-unsupported-features/node-builtins": "off"
-				}
+	"xo": [
+		{
+			"rules": {
+				"@typescript-eslint/naming-convention": "off"
 			}
-		]
-	}
+		}
+	]
 }
