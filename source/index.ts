@@ -8,7 +8,7 @@ import {
 	suffixHTML,
 	suffixMarkdown,
 	suffixMarkdownV2,
-} from './identifier.js';
+} from './identifier.ts';
 
 type ConstOrPromise<T> = T | Promise<T>;
 export type AnswerFunction<Context extends BaseContext> = (

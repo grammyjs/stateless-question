@@ -1,7 +1,7 @@
 import {deepStrictEqual, strictEqual, throws} from 'node:assert';
 import {test} from 'node:test';
 import {Bot, type Context as BaseContext} from 'grammy';
-import {type AnswerFunction, StatelessQuestion} from './index.js';
+import {type AnswerFunction, StatelessQuestion} from './index.ts';
 
 function shouldntBeCalled(): never {
 	throw new Error('shouldnt be called');

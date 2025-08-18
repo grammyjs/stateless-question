@@ -16,6 +16,7 @@
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"outDir": "dist",
+		"rewriteRelativeImportExtensions": true,
 		"skipLibCheck": true,
 		"strict": true,
 		"target": "es2020", // Node.js 14

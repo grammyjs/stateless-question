@@ -1,6 +1,6 @@
 import {strictEqual, throws} from 'node:assert';
 import {test} from 'node:test';
-import {suffixHTML, suffixMarkdown, suffixMarkdownV2} from './identifier.js';
+import {suffixHTML, suffixMarkdown, suffixMarkdownV2} from './identifier.ts';
 
 await test('messageSuffixMarkdown', () => {
 	strictEqual(
