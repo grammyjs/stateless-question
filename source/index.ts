@@ -18,12 +18,11 @@ export type AnswerFunction<Context extends BaseContext> = (
 
 export class StatelessQuestion<Context extends BaseContext> {
 	public readonly uniqueIdentifier: string;
+	readonly #answer: AnswerFunction<Context>;
 
-	constructor(
-		uniqueIdentifier: string,
-		private readonly answer: AnswerFunction<Context>,
-	) {
+	constructor(uniqueIdentifier: string, answer: AnswerFunction<Context>) {
 		this.uniqueIdentifier = encodeURIComponent(uniqueIdentifier);
+		this.#answer = answer;
 	}
 
 	middleware(): (context: Context, next: () => Promise<void>) => Promise<void> {
@@ -36,7 +35,7 @@ export class StatelessQuestion<Context extends BaseContext> {
 					context,
 					this.uniqueIdentifier,
 				);
-				return this.answer(context, additionalState);
+				return this.#answer(context, additionalState);
 			}
 
 			await next();
