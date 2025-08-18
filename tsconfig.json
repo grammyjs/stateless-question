@@ -4,7 +4,7 @@
 		"erasableSyntaxOnly": true,
 		"exactOptionalPropertyTypes": true,
 		"forceConsistentCasingInFileNames": true,
-		"module": "node16",
+		"module": "node18",
 		"moduleDetection": "force",
 		"noEmitOnError": true,
 		"noFallthroughCasesInSwitch": true,
@@ -19,7 +19,7 @@
 		"rewriteRelativeImportExtensions": true,
 		"skipLibCheck": true,
 		"strict": true,
-		"target": "es2020", // Node.js 14
+		"target": "es2022", // Node.js 18
 		"verbatimModuleSyntax": true
 	}
 }

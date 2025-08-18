@@ -28,7 +28,7 @@
 	},
 	"type": "module",
 	"engines": {
-		"node": ">=14"
+		"node": ">=18"
 	},
 	"peerDependencies": {
 		"grammy": "^1.10.1"
