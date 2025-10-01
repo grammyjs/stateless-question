@@ -36,7 +36,7 @@
 	"devDependencies": {
 		"@types/node": "^18.18.13",
 		"c8": "^10.1.2",
-		"del-cli": "^6.0.0",
+		"del-cli": "^7.0.0",
 		"grammy": "^1.10.1",
 		"typescript": "^5.9.2",
 		"xo": "^1.2.2"
