@@ -20,3 +20,6 @@ updates:
       interval: "monthly"
     commit-message:
       prefix: "ci(actions):"
+    groups:
+      actions:
+        patterns: ["actions/*"]
