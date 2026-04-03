@@ -3,7 +3,6 @@
 		"declaration": true,
 		"erasableSyntaxOnly": true,
 		"exactOptionalPropertyTypes": true,
-		"forceConsistentCasingInFileNames": true,
 		"module": "node18",
 		"moduleDetection": "force",
 		"noEmitOnError": true,
@@ -12,14 +11,14 @@
 		"noImplicitReturns": true,
 		"noPropertyAccessFromIndexSignature": true,
 		"noUncheckedIndexedAccess": true,
-		"noUncheckedSideEffectImports": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"outDir": "dist",
 		"rewriteRelativeImportExtensions": true,
+		"rootDir": "./source",
 		"skipLibCheck": true,
-		"strict": true,
 		"target": "es2022", // Node.js 18
+		"types": ["node"],
 		"verbatimModuleSyntax": true
 	}
 }
